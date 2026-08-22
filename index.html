@@ -194,14 +194,15 @@
 <!--
   ============================================================
   LIVE DATABASE — already provisioned, nothing to fill in.
-  This page reads/writes a single row in a Supabase Postgres
-  table (project "rugscreation-manifest"). The URL and anon key
-  below are safe to keep in the page — real protection comes
-  from the Row Level Security policies on the manifest_state
-  table, not from hiding these values.
+  This page reads/writes a single Firestore document (Firebase
+  project "Velaar"). The config below is safe to keep in the
+  page — real protection comes from the Firestore security
+  rules, not from hiding these values.
   ============================================================
 -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <div id="app" role="main"></div>
 <script id="app-state" type="application/json">{"meta": {"threshold": 5, "companyName": "RugsCreation", "updated": null}, "buyers": ["Giga", "Lutz", "Spits", "Tanju", "Wayfair", "fonq"], "inventory": [{"id": "r1", "supplier": 20082154, "sku": "VLR2017987", "ean": "8720589919235", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "200 R", "stock": 29, "price": 46.55}, {"id": "r2", "supplier": 20082157, "sku": "VLR2017982", "ean": "8720589919266", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "150 R", "stock": 24, "price": 26.6}, {"id": "r3", "supplier": 20082268, "sku": "VLR2090074", "ean": "8720618102386", "name": "Vloerkleed Shelly Zickzack", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 27, "price": 85.95}, {"id": "r4", "supplier": 20082395, "sku": "VLR2090199", "ean": "8721161151777", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 25, "price": 36.18}, {"id": "r5", "supplier": 20082266, "sku": "VLR2090072", "ean": "08720618102362", "name": "Velaar Geweven Tapijt in Brown,Natural", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 23, "price": 123.12}, {"id": "r6", "supplier": 20082392, "sku": "VLR2090196", "ean": "8721161151746", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115", "stock": 21, "price": 36.18}, {"id": "r7", "supplier": 20082223, "sku": "VLR2090029", "ean": "08720589919921", "name": "Vloerkleed Flocus Grijs", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 21, "price": 96.69}, {"id": "r8", "supplier": 20082382, "sku": "VLR2090186", "ean": "8721161151463", "name": "TAPIJT ONDERVLOER GRIJS", "fibre": "100% Polyester", "size": "155x225 cm", "stock": 20, "price": 25.3}, {"id": "r9", "supplier": 20082160, "sku": "VLR2090012", "ean": "8720589919297", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "80%Jute 20%Cotton", "size": "200 R", "stock": 15, "price": 46.55}, {"id": "r10", "supplier": 20082391, "sku": "VLR2090195", "ean": "8721161151739", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 20, "price": 104.03}, {"id": "r11", "supplier": 20082221, "sku": "VLR2090027", "ean": "8720589919907", "name": "Vloerkleed Flocus Beige", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 20, "price": 96.69}, {"id": "r12", "supplier": 20082265, "sku": "VLR2090071", "ean": " 08720618102355", "name": "Vloerkleed McKenna Natuur/Grijs", "fibre": "100 % Wool", "size": "190*290", "stock": 19, "price": 113.42}, {"id": "r13", "supplier": 20082149, "sku": "VLR2009630", "ean": "8720589919181", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "150 R", "stock": 10, "price": 26.6}, {"id": "r14", "supplier": 20082396, "sku": "VLR2090200", "ean": "8721161151784", "name": "MILAN KÖNIGLICH HELDONKER GRIJS TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 18, "price": 104.03}, {"id": "r15", "supplier": 20082159, "sku": "VLR2090010", "ean": "8720589919280", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "80%Jute 20%Cotton", "size": "150 R", "stock": 13, "price": 26.6}, {"id": "r16", "supplier": 20082405, "sku": "VLR2090209", "ean": "8721161151869", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 17, "price": 104.03}, {"id": "r17", "supplier": 20082225, "sku": "VLR2090031", "ean": "8720589919945", "name": "Vloerkleed Flocus Antraciet", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 17, "price": 96.69}, {"id": "r18", "supplier": 20082267, "sku": "VLR2090073", "ean": "  08720618102379", "name": "Velaar Geweven Tapijt in Brown,Natural", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 17, "price": 184.34}, {"id": "r19", "supplier": 20082264, "sku": "VLR2090070", "ean": "8720618102348", "name": "Vloerkleed McKenna Natuur/Grijs", "fibre": "100 % Wool", "size": "160*230", "stock": 16, "price": 75.75}, {"id": "r20", "supplier": 20082259, "sku": "VLR2090065", "ean": "08720618102294", "name": "Geometric 160cm X 230cm Area Rug", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 16, "price": 118.02}, {"id": "r21", "supplier": 20082229, "sku": "VLR2090035", "ean": "08720589919983", "name": "Vloerkleed Smyrna Beige", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 16, "price": 116.92}, {"id": "r22", "supplier": 20082384, "sku": "VLR2090188", "ean": "8721161151487", "name": "TAPIJT ONDERVLOER GRIJS", "fibre": "100% Polyester", "size": "190x290 cm", "stock": 15, "price": 31.61}, {"id": "r23", "supplier": 20082404, "sku": "VLR2090208", "ean": "8721161151661", "name": "TAPIJT ONDERVLOER GRIJS", "fibre": "100% Polyester", "size": "115x175 cm", "stock": 15, "price": 11.53}, {"id": "r24", "supplier": 20082156, "sku": "VLR2017985", "ean": "8720589919259", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "200 R", "stock": 15, "price": 46.55}, {"id": "r25", "supplier": 20082388, "sku": "VLR2090192", "ean": "8721161151708", "name": "MILAN KÖNIGLICH HELLBLUSH TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 14, "price": 104.03}, {"id": "r26", "supplier": 20082227, "sku": "VLR2090033", "ean": "08720589919969", "name": "Dutch Living Rug Smyrna cream", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 15, "price": 116.92}, {"id": "r27", "supplier": 20082383, "sku": "VLR2090187", "ean": "8721161151470", "name": "TAPIJT ONDERVLOER GRIJS", "fibre": "100% Polyester", "size": "185x285 cm", "stock": 14, "price": 30.23}, {"id": "r28", "supplier": 20082401, "sku": "VLR2090205", "ean": "8721161151838", "name": "MILAN KÖNIGLICH HELLMOSTERD TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 12, "price": 36.18}, {"id": "r29", "supplier": 20082309, "sku": "VLR2090116", "ean": "8721161151494", "name": "DENIM GEWEVEN TAPIJT", "fibre": "80% Wool 20% Cotton", "size": "160x230 cm", "stock": 12, "price": 106.4}, {"id": "r30", "supplier": 20082397, "sku": "VLR2090201", "ean": "8721161151791", "name": "MILAN KÖNIGLICH HELDONKER GRIJS TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 12, "price": 36.18}, {"id": "r31", "supplier": 20082253, "sku": "VLR2090059", "ean": "08720618102232", "name": "Vloerkleed Acyee", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 12, "price": 89.24}, {"id": "r32", "supplier": 20082257, "sku": "VLR2090063", "ean": " 08720618102270", "name": "Vloerkleed Bermudez", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 9, "price": 118.02}, {"id": "r33", "supplier": 20082177, "sku": "VLC1929953", "ean": "8720589919464", "name": "MILAN KÖNIGLICH HELLGRAU TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "160 x 230 Cm", "stock": 10, "price": 93.1}, {"id": "r34", "supplier": 20082222, "sku": "VLR2090028", "ean": " 08720589919914", "name": "Vloerkleed Flocus Beige", "fibre": "", "size": "190*290", "stock": 12, "price": 144.77}, {"id": "r35", "supplier": 20082224, "sku": "VLR2090030", "ean": "08720589919938", "name": "Vloerkleed Flocus Grijs", "fibre": "", "size": "190*290", "stock": 12, "price": 144.77}, {"id": "r36", "supplier": 20082228, "sku": "VLR2090034", "ean": "08720589919976", "name": "Dutch Living Rug Smyrna cream", "fibre": "", "size": "190*290", "stock": 12, "price": 175.06}, {"id": "r37", "supplier": 20082269, "sku": "VLR2090075", "ean": "08720618102393", "name": "Vloerkleed Shelly Zickzack", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 11, "price": 128.69}, {"id": "r38", "supplier": 20082239, "sku": "VLR2090045", "ean": "8720618102096", "name": "Dutch Living McKenna Carpet, Grey,", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 10, "price": 110.73}, {"id": "r39", "supplier": 20082272, "sku": "VLR2090078", "ean": "08720618102423", "name": "Dutch Living Rug Wayne natural", "fibre": "100 % Cotton", "size": "190*290", "stock": 9, "price": 101.45}, {"id": "r40", "supplier": 20082158, "sku": "VLR2017983", "ean": "8720589919273", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "200 R", "stock": 10, "price": 46.55}, {"id": "r41", "supplier": 20082403, "sku": "VLR2090207", "ean": "8721161151852", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 10, "price": 36.18}, {"id": "r42", "supplier": 20082298, "sku": "VLR2090104", "ean": "08720618102683", "name": "", "fibre": "", "size": "195*300", "stock": 10, "price": 138.93}, {"id": "r43", "supplier": 20082271, "sku": "VLR2090077", "ean": "8720618102416", "name": "Dutch Living Rug Wayne natural", "fibre": "100 % Cotton", "size": "160*230", "stock": 8, "price": 67.75}, {"id": "r44", "supplier": 20082311, "sku": "VLR2090118", "ean": "8721161151500", "name": "DRIFTWOOD TEXTURED GEWEVEN TAPIJT", "fibre": "Face : 100% Jute Back 100% Cotton", "size": "160x230 cm", "stock": 9, "price": 106.4}, {"id": "r45", "supplier": 20082393, "sku": "VLR2090197", "ean": "8721161151753", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 9, "price": 104.03}, {"id": "r46", "supplier": 20082270, "sku": "VLR2090076", "ean": " 08720618102409", "name": "Vloerkleed Babin-Wollform", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 9, "price": 120.92}, {"id": "r47", "supplier": 20082260, "sku": "VLR2090066", "ean": " 08720618102300", "name": "Vloerkleed Kiana", "fibre": "Front-90 % WOOL 10 % Cotton\nBack -100 % Cotton", "size": "160*230", "stock": 9, "price": 85.95}, {"id": "r48", "supplier": 20082348, "sku": "VLR2090152", "ean": "8721161151241", "name": "FLAWLESS GEWEVEN GRIJS BRUIN TAPIJT", "fibre": "Face - 100% Wool\nBack - 100% Cotton", "size": "160x230 cm", "stock": 5, "price": 85.9}, {"id": "r49", "supplier": 20082394, "sku": "VLR2090198", "ean": "8721161151760", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 8, "price": 36.18}, {"id": "r50", "supplier": 20082255, "sku": "VLR2090061", "ean": "8720618102256", "name": "Velaar Geweven Tapijt in Natural", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 8, "price": 89.24}, {"id": "r51", "supplier": 20082263, "sku": "VLR2090069", "ean": "8720618102331", "name": "Dutch Living Carpet Koah natural/black", "fibre": "Front-55 % Cotton 45 Polyester\nBack-100 % Cotton", "size": "190*290", "stock": 8, "price": 122.7}, {"id": "r52", "supplier": 20082312, "sku": "VLR2090119", "ean": "8721161151517", "name": "AVON GEWEVEN TAPIJT", "fibre": "Face : 50% Wool 50% Jute Back 100% Cotton", "size": "160x230 cm", "stock": 7, "price": 106.4}, {"id": "r53", "supplier": 20082297, "sku": "VLR2090103", "ean": "8720618102676", "name": "", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 7, "price": 87.4}, {"id": "r54", "supplier": 20082309, "sku": "VLR2090115", "ean": "8720618102799", "name": "", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 7, "price": 87.4}, {"id": "r55", "supplier": 20082247, "sku": "VLR2090053", "ean": "8720618102171", "name": "Vloerkleed Anarah", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 7, "price": 88.69}, {"id": "r56", "supplier": 20082231, "sku": "VLR2090037", "ean": "08720618102010", "name": "Dutch Living Smyrna Carpet, Grey,", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 7, "price": 116.92}, {"id": "r57", "supplier": 20082240, "sku": "VLR2090046", "ean": "08720618102102", "name": "Dutch Living McKenna Carpet, Grey,", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 7, "price": 165.79}, {"id": "r58", "supplier": 20082249, "sku": "VLR2090055", "ean": "8720618102195", "name": "Vloerkleed Celso", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 7, "price": 89.24}, {"id": "r59", "supplier": 20082261, "sku": "VLR2090067", "ean": " 08720618102317", "name": "Vloerkleed Kiana", "fibre": "Front-90 % WOOL 10 % Cotton\nBack -100 % Cotton", "size": "190*290", "stock": 7, "price": 128.69}, {"id": "r60", "supplier": 20082162, "sku": "VLR2008892", "ean": "8720589919310", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "200 R", "stock": 3, "price": 47.5}, {"id": "r61", "supplier": 20082354, "sku": "VLR2090158", "ean": "8721161151302", "name": "HEATHER GEWEVEN BEIGE ZWART TAPIJT", "fibre": "90% Polyester 10% Cotton", "size": "160x230 cm", "stock": 5, "price": 100.7}, {"id": "r62", "supplier": 20082356, "sku": "VLR2090160", "ean": "8721161151326", "name": "HEATHER GEWEVEN BEIGE ZWART TAPIJT", "fibre": "90% Polyester 10% Cotton", "size": "160x230 cm", "stock": 6, "price": 100.7}, {"id": "r63", "supplier": 20082299, "sku": "VLR2090105", "ean": "8720618102690", "name": "", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 6, "price": 87.4}, {"id": "r64", "supplier": 20082226, "sku": "VLR2090032", "ean": "08720589919952", "name": "Vloerkleed Flocus Antraciet", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 6, "price": 144.77}, {"id": "r65", "supplier": 20082230, "sku": "VLR2090036", "ean": "8720589919990", "name": "Vloerkleed Smyrna Beige", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 6, "price": 175.06}, {"id": "r66", "supplier": 20082232, "sku": "VLR2090038", "ean": " 08720618102027", "name": "Dutch Living Smyrna Carpet, Grey,", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 6, "price": 175.06}, {"id": "r67", "supplier": 20082254, "sku": "VLR2090060", "ean": "08720618102249", "name": "Vloerkleed Acyee", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 6, "price": 133.62}, {"id": "r68", "supplier": 20082256, "sku": "VLR2090062", "ean": "08720618102263", "name": "Velaar Geweven Tapijt in Natural", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 6, "price": 133.62}, {"id": "r69", "supplier": 20082327, "sku": "VLR2090134", "ean": "8721161151562", "name": "MILAN KÖNIGLICH HELLMULTI TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "200x300 cm", "stock": 5, "price": 180.28}, {"id": "r70", "supplier": 20082340, "sku": "VLR2090147", "ean": "8721161151203", "name": "PATIO GEWEVEN ZWART TAPIJT", "fibre": "100% Polyester", "size": "135x230 cm", "stock": 3, "price": 24.02}, {"id": "r71", "supplier": 20082153, "sku": "VLR2017986", "ean": "8720589919228", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "150 R", "stock": 2, "price": 26.6}, {"id": "r72", "supplier": 20082150, "sku": "VLR2009631", "ean": "8720589919198", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "200 R", "stock": 2, "price": 46.5}, {"id": "r73", "supplier": 20082161, "sku": "VLR2008891", "ean": "8720589919303", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "150 R", "stock": 2, "price": 27.55}, {"id": "r74", "supplier": 20082152, "sku": "VLR2004201", "ean": "8720589919211", "name": "JAIPUR KLASSISCH BUNT TEPPICH", "fibre": "50%Jute 50% Recycled Cotton", "size": "200 R", "stock": 3, "price": 44.65}, {"id": "r75", "supplier": 20082352, "sku": "VLR2090156", "ean": "8721161151289", "name": "HEATHER GEWEVEN NATUURLIJK ZWART TAPIJT", "fibre": "90% Polyester 10% Cotton", "size": "160x230 cm", "stock": 5, "price": 100.7}, {"id": "r76", "supplier": 20082305, "sku": "VLR2090111", "ean": "08720618102751", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 5, "price": 100.7}, {"id": "r77", "supplier": 20082398, "sku": "VLR2090202", "ean": "8721161151807", "name": "MILAN KÖNIGLICH HELTERRACOTTATEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 4, "price": 104.03}, {"id": "r78", "supplier": 20082176, "sku": "VLC1929952", "ean": "8720589919457", "name": "MILAN KÖNIGLICH GRAU TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "200 x 300 Cm", "stock": 4, "price": 152.0}, {"id": "r79", "supplier": 20082185, "sku": "VLC1929905", "ean": "8720589919549", "name": "MILAN KÖNIGLICH ROSA TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "160 x 230 Cm", "stock": 4, "price": 102.6}, {"id": "r80", "supplier": 20082155, "sku": "VLR2017984", "ean": "8720589919242", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "150 R", "stock": 1, "price": 26.6}, {"id": "r81", "supplier": 20082376, "sku": "VLR2090180", "ean": "8721161151401", "name": "ATMORE GEWEVEN DONKER GRIJS TAPIJT", "fibre": "face - 100% Wool \nBack - 100% Cotton", "size": "160x230 cm", "stock": 4, "price": 85.9}, {"id": "r82", "supplier": 20082378, "sku": "VLR2090182", "ean": "8721161151425", "name": "ATMORE GEWEVEN GRIJS TAPIJT", "fibre": "face - 100% Wool \nBack - 100% Cotton", "size": "160x230 cm", "stock": 4, "price": 85.9}, {"id": "r83", "supplier": 20082315, "sku": "VLR2090122", "ean": "8721161151524", "name": "ATLAS GEWEVEN TAPIJT", "fibre": "Face : 50% Wool 50% Viscose Back 100% Cotton", "size": "160x230 cm", "stock": 4, "price": 111.34}, {"id": "r84", "supplier": 20082366, "sku": "VLR2090170", "ean": "8721161151609", "name": "URBAN GRIDLINE GEWEVEN GRIJS TAPIJT", "fibre": "Face- 100% Wool Back 100% Cotton", "size": "160x230 cm", "stock": 4, "price": 105.63}, {"id": "r85", "supplier": 20082302, "sku": "VLR2090108", "ean": "08720618102720", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 4, "price": 100.7}, {"id": "r86", "supplier": 20082386, "sku": "VLR2090190", "ean": "8721161151685", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 3, "price": 36.18}, {"id": "r87", "supplier": 20082248, "sku": "VLR2090054", "ean": "08720618102188", "name": "Vloerkleed Anarah", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 4, "price": 132.8}, {"id": "r88", "supplier": 20082238, "sku": "VLR2090044", "ean": "8720618102089", "name": "Vloerkleed Acyee Grijs", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 4, "price": 194.44}, {"id": "r89", "supplier": 20082262, "sku": "VLR2090068", "ean": "08720618102324", "name": "Dutch Living Carpet Koah natural/black", "fibre": "Front-55 % Cotton 45 Polyester\nBack-100 % Cotton", "size": "160*230", "stock": 3, "price": 81.95}, {"id": "r90", "supplier": 20082183, "sku": "VLC1929900", "ean": "8720589919525", "name": "MILAN DOPPELMUSTER BEIGE TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "160 x 230 Cm", "stock": 3, "price": 102.6}, {"id": "r91", "supplier": 20082358, "sku": "VLR2090162", "ean": "8721161151340", "name": "ASHEN GEWEVEN NATUURLIJK ZWART TAPIJT", "fibre": "Pile 100% Wool\nBacking: Cotton", "size": "160x230 cm", "stock": 3, "price": 96.0}, {"id": "r92", "supplier": 20082300, "sku": "VLR2090106", "ean": " 08720618102706", "name": "MILAN KÖNIGLICH BLACK TEPPICH", "fibre": "", "size": "195*300", "stock": 4, "price": 138.93}, {"id": "r93", "supplier": 20082317, "sku": "VLR2090124", "ean": "8721161151036", "name": "AQUAWAVE GEWEVEN GROENTE KUSSEN", "fibre": "", "size": "45x45 cm", "stock": 4, "price": 8.38}, {"id": "r94", "supplier": 20082319, "sku": "VLR2090126", "ean": "8721161151050", "name": "AQUAWAVE GEWEVEN GRIJS KUSSEN", "fibre": "", "size": "45x45 cm", "stock": 4, "price": 8.38}, {"id": "r95", "supplier": 20082344, "sku": "VLR2090149", "ean": "8721161151210", "name": "PATIO GEWEVEN ZWART NATUURLIJK TAPIJT", "fibre": "100% Polyester", "size": "135x230 cm", "stock": 3, "price": 24.02}, {"id": "r96", "supplier": 20082353, "sku": "VLR2090157", "ean": "8721161151296", "name": "HEATHER GEWEVEN NATUURLIJK ZWART TAPIJT", "fibre": "90% Polyester 10% Cotton", "size": "195x300 cm", "stock": 3, "price": 160.1}, {"id": "r97", "supplier": 20082355, "sku": "VLR2090159", "ean": "8721161151319", "name": "HEATHER GEWEVEN BEIGE ZWART TAPIJT", "fibre": "90% Polyester 10% Cotton", "size": "195x300 cm", "stock": 3, "price": 160.1}, {"id": "r98", "supplier": 20082374, "sku": "VLR2090178", "ean": "8721161151647", "name": "ATMORE GEWEVEN GEBLOTEN WIT TAPIJT", "fibre": "face - 100% Polyester \nBack - 100% Cotton", "size": "160x230 cm", "stock": 3, "price": 61.2}, {"id": "r99", "supplier": 20082363, "sku": "VLR2090167", "ean": "8721161151579", "name": "EBONY GEWEVEN ZWART TAPIJT", "fibre": "Face - 100% Viscose \nBack - 100% Cotton", "size": "195x300 cm", "stock": 3, "price": 175.0}, {"id": "r100", "supplier": 20082377, "sku": "VLR2090181", "ean": "8721161151418", "name": "ATMORE GEWEVEN DONKER GRIJS TAPIJT", "fibre": "face - 100% Wool \nBack - 100% Cotton", "size": "195x300 cm", "stock": 3, "price": 136.55}, {"id": "r101", "supplier": 20082364, "sku": "VLR2090168", "ean": "8721161151586", "name": "ECRU TEXTURED GEWEVEN BEIGE TAPIJT", "fibre": "Face- 100% Wool Back 100% Cotton", "size": "160x230 cm", "stock": 3, "price": 105.63}, {"id": "r102", "supplier": 20082365, "sku": "VLR2090169", "ean": "8721161151593", "name": "ECRU TEXTURED GEWEVEN BEIGE TAPIJT", "fibre": "Face- 100% Wool Back 100% Cotton", "size": "195x300 cm", "stock": 3, "price": 168.0}, {"id": "r103", "supplier": 20082284, "sku": "VLR2090090", "ean": "08720618102546", "name": "MILAN KÖNIGLICH HELLLEGEND TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 2, "price": 100.7}, {"id": "r104", "supplier": 20082304, "sku": "VLR2090110", "ean": "08720618102744", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 3, "price": 160.08}, {"id": "r105", "supplier": 20082333, "sku": "VLR2090140", "ean": "8721161151135", "name": "VANESSA KÖNIGLICH HELLBLAU TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 3, "price": 175.77}, {"id": "r106", "supplier": 20082335, "sku": "VLR2090142", "ean": "8721161151159", "name": "VANESSA KÖNIGLICH HELLGRAU TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 3, "price": 175.77}, {"id": "r107", "supplier": 20082219, "sku": "VLR2090025", "ean": "8720589919884", "name": "Vloerkleed Verona Beige/Wit", "fibre": "Front-100 % Polyester\nBack-100 % Cotton", "size": "190*290", "stock": 3, "price": 102.27}, {"id": "r108", "supplier": 20082250, "sku": "VLR2090056", "ean": "  08720618102201", "name": "Vloerkleed Celso", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 3, "price": 133.62}, {"id": "r109", "supplier": 20082237, "sku": "VLR2090043", "ean": "8720618102072", "name": "Vloerkleed Acyee Grijs", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 3, "price": 129.86}, {"id": "r110", "supplier": 20082186, "sku": "VLC1929906", "ean": "8720589919556", "name": "MILAN KÖNIGLICH ROSA TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "200 x 300 Cm", "stock": 1, "price": 166.6}, {"id": "r111", "supplier": 20082326, "sku": "VLR2090133", "ean": "8721161151555", "name": "MILAN KÖNIGLICH HELLMULTI TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "160x230 cm", "stock": 3, "price": 110.57}, {"id": "r112", "supplier": 20082178, "sku": "VLC1929954", "ean": "8720589919471", "name": "MILAN KÖNIGLICH HELLGRAU TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "200 x 300 Cm", "stock": 2, "price": 152.0}, {"id": "r113", "supplier": 20082368, "sku": "VLR2090172", "ean": "8721161151364", "name": "ATMORE GEWEVEN GRIJS TAPIJT", "fibre": "face - 100% Polyester \nBack - 100% Cotton", "size": "160x230 cm", "stock": 2, "price": 61.2}, {"id": "r114", "supplier": 20082369, "sku": "VLR2090173", "ean": "8721161151371", "name": "ATMORE GEWEVEN GRIJS TAPIJT", "fibre": "face - 100% Polyester \nBack - 100% Cotton", "size": "195x300 cm", "stock": 2, "price": 97.3}, {"id": "r115", "supplier": 20082313, "sku": "VLR2090120", "ean": "8721161151005", "name": "SANDSTONE GEWEVEN TAPIJT", "fibre": "Face : 100% Wool Back 100% Cotton", "size": "160x230 cm", "stock": 2, "price": 86.66}, {"id": "r116", "supplier": 20082314, "sku": "VLR2090121", "ean": "8721161151012", "name": "ABASCA GEWEVEN TAPIJT", "fibre": "Face : 100% Wool Back 100% Cotton", "size": "160x230 cm", "stock": 2, "price": 111.34}, {"id": "r117", "supplier": 20082307, "sku": "VLR2090113", "ean": "08720618102775", "name": "", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 2, "price": 87.4}, {"id": "r118", "supplier": 20082295, "sku": "VLR2090101", "ean": " 08720618102652", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 2, "price": 100.7}, {"id": "r119", "supplier": 20082303, "sku": "VLR2090109", "ean": "08720618102737", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 1, "price": 100.7}, {"id": "r120", "supplier": 20082292, "sku": "VLR2090098", "ean": "8720618102621", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 2, "price": 160.08}, {"id": "r121", "supplier": 20082328, "sku": "VLR2090135", "ean": "8721161151104", "name": "VANESSA KÖNIGLICH HELLGOLDEN TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 1, "price": 110.57}, {"id": "r122", "supplier": 20082336, "sku": "VLR2090143", "ean": "8721161151166", "name": "VANESSA KÖNIGLICH HELLBEIGE TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 2, "price": 110.57}, {"id": "r123", "supplier": 20082337, "sku": "VLR2090144", "ean": "8721161151173", "name": "VANESSA KÖNIGLICH HELLBEIGE TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 2, "price": 175.77}, {"id": "r124", "supplier": 20082385, "sku": "VLR2090189", "ean": "8721161151678", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 1, "price": 104.03}, {"id": "r125", "supplier": 20082218, "sku": "VLR2090024", "ean": "8720589919877", "name": "Vloerkleed Verona Beige/Wit", "fibre": "Front-100 % Polyester\nBack-100 % Cotton", "size": "160*230", "stock": 2, "price": 68.3}, {"id": "r126", "supplier": 20082220, "sku": "VLR2090026", "ean": "08720589919891", "name": "Vloerkleed Verona Beige/Wit", "fibre": "Front-100 % Polyester\nBack-100 % Cotton", "size": "160*230", "stock": 2, "price": 68.3}, {"id": "r127", "supplier": 20082233, "sku": "VLR2090039", "ean": "  08720618102034", "name": "Vloerkleed Acyee Crème", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 2, "price": 129.86}, {"id": "r128", "supplier": 20082243, "sku": "VLR2090049", "ean": "8720618102133", "name": "Dutch Living Rug McKenna cream", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 2, "price": 110.73}, {"id": "r129", "supplier": 20082244, "sku": "VLR2090050", "ean": "8720618102140", "name": "Dutch Living Rug McKenna cream", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 2, "price": 165.79}, {"id": "r130", "supplier": 20082246, "sku": "VLR2090052", "ean": "8720618102164", "name": "Vloerkleed Pastrana Donkergrijs", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 2, "price": 132.8}, {"id": "r131", "supplier": 20082258, "sku": "VLR2090064", "ean": "8720618102287", "name": "Vloerkleed Bermudez", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 2, "price": 176.71}, {"id": "r132", "supplier": 20082359, "sku": "VLR2090163", "ean": "8721161151357", "name": "ASHEN GEWEVEN NATUURLIJK ZWART TAPIJT", "fibre": "Pile 100% Wool\nBacking: Cotton", "size": "195x300 cm", "stock": 1, "price": 152.25}, {"id": "r133", "supplier": 20082318, "sku": "VLR2090125", "ean": "8721161151043", "name": "AQUAWAVE GEWEVEN BEIGE KUSSEN", "fibre": "", "size": "45x45 cm", "stock": 2, "price": 8.38}, {"id": "r134", "supplier": 20082320, "sku": "VLR2090127", "ean": "8721161151067", "name": "RIBBED GEWEVEN HEMELSBLAUW POEF", "fibre": "Cover - 100% Viscose Filling Tharmacol beans", "size": "40x40x45 cm", "stock": 1, "price": 36.22}, {"id": "r135", "supplier": 20082370, "sku": "VLR2090174", "ean": "8721161151623", "name": "ATMORE GEWEVEN BEIGE TAPIJT", "fibre": "face - 100% Polyester \nBack - 100% Cotton", "size": "160x230 cm", "stock": 1, "price": 61.2}, {"id": "r136", "supplier": 20082371, "sku": "VLR2090175", "ean": "8721161151630", "name": "ATMORE GEWEVEN BEIGE TAPIJT", "fibre": "face - 100% Polyester \nBack - 100% Cotton", "size": "195x300 cm", "stock": 1, "price": 97.3}, {"id": "r137", "supplier": 20082379, "sku": "VLR2090183", "ean": "8721161151432", "name": "ATMORE GEWEVEN GRIJS TAPIJT", "fibre": "face - 100% Wool \nBack - 100% Cotton", "size": "195x300 cm", "stock": 0, "price": 136.53}, {"id": "r138", "supplier": 20082347, "sku": "VLR2090151", "ean": "8721161151234", "name": "FLAWLESS GEWEVEN BRUIN TAPIJT", "fibre": "Face - 100% Wool\nBack - 100% Cotton", "size": "195x300 cm", "stock": 0, "price": 136.53}, {"id": "r139", "supplier": 20082346, "sku": "VLR2090150", "ean": "8721161151227", "name": "FLAWLESS GEWEVEN BRUIN TAPIJT", "fibre": "Face - 100% Wool\nBack - 100% Cotton", "size": "160x230 cm", "stock": 1, "price": 85.9}, {"id": "r140", "supplier": 20082289, "sku": "VLR2090095", "ean": "08720618102591", "name": "MILAN KÖNIGLICH HELLBLUSH TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 0, "price": 100.7}, {"id": "r141", "supplier": 20082329, "sku": "VLR2090136", "ean": "8721161151111", "name": "VANESSA KÖNIGLICH HELLGOLDEN TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 0, "price": 175.77}, {"id": "r142", "supplier": 20082339, "sku": "VLR2090146", "ean": "8721161151197", "name": "VANESSA KÖNIGLICH HELLCREME TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 1, "price": 175.77}, {"id": "r143", "supplier": 20082390, "sku": "VLR2090192", "ean": "8721161151722", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 0, "price": 39.65}, {"id": "r144", "supplier": 20082332, "sku": "VLR2090139", "ean": "8721161151128", "name": "VANESSA KÖNIGLICH HELLBLAU TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 0, "price": 39.65}, {"id": "r145", "supplier": 20082399, "sku": "VLR2090203", "ean": "8721161151814", "name": "MILAN KÖNIGLICH HELTERRACOTTATEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 1, "price": 36.18}, {"id": "r146", "supplier": 20082236, "sku": "VLR2090042", "ean": "8720618102065", "name": "Vloerkleed Acyee Beige", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 1, "price": 129.86}, {"id": "r147", "supplier": 20082251, "sku": "VLR2090057", "ean": "8720618102218", "name": "Dutch Living Bermudez Rug Grey", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 1, "price": 84.14}, {"id": "r148", "supplier": 20082180, "sku": "VLC1929956", "ean": "8720589919495", "name": "MILAN KÖNIGLICH SAHNE TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "200 x 300 Cm", "stock": 0, "price": 152.0}, {"id": "r149", "supplier": 20082285, "sku": "VLR2090091", "ean": "8720618102553", "name": "Berlin Sage Green Rug 195x300cm", "fibre": "", "size": "195*300", "stock": 0, "price": 138.93}, {"id": "r150", "supplier": 20082308, "sku": "VLR2090114", "ean": "8720618102782", "name": "", "fibre": "", "size": "195*300", "stock": 1, "price": 138.93}, {"id": "r151", "supplier": 20082323, "sku": "VLR2090130", "ean": "8721161151098", "name": "RIBBED GEWEVEN GRIJS POEF", "fibre": "", "size": "40x40x45 cm", "stock": 1, "price": 36.22}], "orders": [], "invoices": []}</script>
 <script>
@@ -209,13 +210,19 @@
 "use strict";
 
 /* ============================================================
-   SUPABASE CONFIG — this project is already live (org "Rugs
-   Creation", project "rugscreation-manifest"). Not a secret —
-   protection is via Row Level Security, not obscurity.
+   FIREBASE CONFIG — this project is already live (project
+   "Velaar", velaar-f2341). Not a secret — protection is via
+   Firestore security rules, not obscurity.
    ============================================================ */
-var SUPABASE_URL = "https://gawiqfuoexwlnlelcmje.supabase.co";
-var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdhd2lxZnVvZXh3bG5sZWxjbWplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTYxNDksImV4cCI6MjEwMjk5MjE0OX0.W31TqofgMBelyMaz6er6hqe-KlfHYS6OREKqsy8wAe4";
-var SUPABASE_CONFIGURED = SUPABASE_URL.indexOf('REPLACE_ME')===-1;
+var FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBJGuf8Lcc4KfdWfMKk1Wx87MuMZPVs88U",
+  authDomain: "velaar-f2341.firebaseapp.com",
+  projectId: "velaar-f2341",
+  storageBucket: "velaar-f2341.firebasestorage.app",
+  messagingSenderId: "234782192531",
+  appId: "1:234782192531:web:46133d5ee7f488aa4eee66"
+};
+var FIREBASE_CONFIGURED = FIREBASE_CONFIG.apiKey.indexOf('REPLACE_ME')===-1;
 
 /* ---------- state ---------- */
 var DEFAULT_STATE = null;
@@ -267,72 +274,55 @@ var UI = {
   dbError:''
 };
 
-var supa = null;
+var db = null;
 
-function initSupabase(){
-  if(!SUPABASE_CONFIGURED){
+function initFirebase(){
+  if(!FIREBASE_CONFIGURED){
     UI.dbReady = true; UI.dbLive = false;
     rerender();
     return;
   }
   try{
-    supa = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    loadState();
-    supa.channel('manifest_state_changes')
-      .on('postgres_changes', {event:'*', schema:'public', table:'manifest_state', filter:'id=eq.state'}, function(payload){
-        if(payload.new && payload.new.data){
-          var data = payload.new.data;
-          data.orders = data.orders || [];
-          data.invoices = data.invoices || [];
-          data.buyers = data.buyers || DEFAULT_STATE.buyers;
-          STATE = data;
-          rerender();
-        }
-      })
-      .subscribe();
-  }catch(e){
-    supa = null;
-    UI.dbReady = true; UI.dbLive = false;
-    UI.dbError = e.message;
-    rerender();
-  }
-}
-
-function loadState(){
-  var settled = false;
-  Promise.resolve(supa.from('manifest_state').select('data').eq('id','state').maybeSingle())
-    .then(function(res){
+    firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.firestore();
+    firebase.auth().signInAnonymously().catch(function(err){
+      db = null;
+      UI.dbReady = true; UI.dbLive = false;
+      UI.dbError = 'sign-in failed: '+err.message;
+      rerender();
+    });
+    var settled = false;
+    var docRef = db.collection('manifest').doc('state');
+    docRef.onSnapshot(function(snap){
       settled = true;
-      if(res.error){
-        supa = null;
-        UI.dbReady = true; UI.dbLive = false;
-        UI.dbError = 'database error: ' + res.error.message;
-        rerender();
-        return;
-      }
-      if(res.data && res.data.data){
-        var data = res.data.data;
+      if(snap.exists){
+        var data = snap.data();
         data.orders = data.orders || [];
         data.invoices = data.invoices || [];
         data.buyers = data.buyers || DEFAULT_STATE.buyers;
         STATE = data;
       } else {
-        Promise.resolve(supa.from('manifest_state').insert({id:'state', data:DEFAULT_STATE})).catch(function(){});
+        docRef.set(DEFAULT_STATE).catch(function(){});
         STATE = DEFAULT_STATE;
       }
       UI.dbReady = true; UI.dbLive = true;
       rerender();
-    })
-    .catch(function(err){
+    }, function(err){
       settled = true;
-      supa = null;
+      db = null;
       UI.dbReady = true; UI.dbLive = false;
-      UI.dbError = err.message;
+      UI.dbError = 'database error: '+err.message;
       rerender();
     });
-  setTimeout(function(){
-    if(!settled){ supa = null; UI.dbReady = true; UI.dbLive = false; UI.dbError = 'timed out connecting'; rerender(); }
-  }, 8000);
+    setTimeout(function(){
+      if(!settled){ db = null; UI.dbReady = true; UI.dbLive = false; UI.dbError = 'timed out connecting'; rerender(); }
+    }, 8000);
+  }catch(e){
+    db = null;
+    UI.dbReady = true; UI.dbLive = false;
+    UI.dbError = e.message;
+    rerender();
+  }
 }
 
 /* ---------- helpers ---------- */
@@ -382,22 +372,18 @@ function stats(){
   return {totalSku:totalSku, totalUnits:totalUnits, low:low, ordersToday:ordersToday};
 }
 
-/* ---------- persistence (Supabase) ---------- */
+/* ---------- persistence (Firestore) ---------- */
 function persist(bannerOnFail){
   STATE.meta.updated = nowISO();
-  if(!supa){
+  if(!db){
     UI.banner = {kind:'warn', text: bannerOnFail || 'Not connected to the live database — this change is only on this screen and won’t be saved.'};
     rerender();
     return Promise.resolve();
   }
   UI.saving = true; rerender();
-  return Promise.resolve(supa.from('manifest_state').update({data: STATE}).eq('id','state')).then(function(res){
+  return db.collection('manifest').doc('state').set(STATE).then(function(){
     UI.saving = false;
-    if(res.error){
-      UI.banner = {kind:'warn', text: bannerOnFail || ('Couldn’t save that change: ' + res.error.message)};
-      rerender();
-    }
-    /* the realtime subscription above will re-render every open tab with the confirmed copy */
+    /* the onSnapshot listener above will re-render with the confirmed copy */
   }).catch(function(err){
     UI.saving = false;
     UI.banner = {kind:'warn', text: bannerOnFail || ('Couldn’t save that change: ' + err.message)};
@@ -652,7 +638,7 @@ function renderLoading(){
     '<div class="loginwrap"><div class="loginbox" style="text-align:center;">' +
     '<span class="stamp" style="margin:0 auto 14px;">RC</span>' +
     '<h1>Connecting…</h1>' +
-    '<div class="loginsub">Loading live stock from Supabase.</div>' +
+    '<div class="loginsub">Loading live stock from Firebase.</div>' +
     '</div></div>';
 }
 
@@ -661,7 +647,7 @@ function render(){
   if(!UI.dbReady){ renderLoading(); return; }
   var html = '';
   if(!UI.dbLive){
-    var why = !SUPABASE_CONFIGURED ? 'The live database isn’t configured yet (see the setup comment near the top of the file).' : ('Couldn’t reach the live database (' + esc(UI.dbError||'unknown error') + ').');
+    var why = !FIREBASE_CONFIGURED ? 'The live database isn’t configured yet (see the setup comment near the top of the file).' : ('Couldn’t reach the live database (' + esc(UI.dbError||'unknown error') + ').');
     html += '<div class="banner warn"><span>Not connected to the live database — you\'re viewing a local copy and changes won\'t be saved. ' + why + '</span></div>';
   }
   html += renderBrandbar();
@@ -1107,7 +1093,7 @@ app.addEventListener('change', function(e){
 
 /* ---------- boot ---------- */
 render();
-initSupabase();
+initFirebase();
 
 })();
 </script>
