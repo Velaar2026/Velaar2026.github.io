@@ -211,16 +211,16 @@
 
 /* ============================================================
    FIREBASE CONFIG — this project is already live (project
-   "Velaar", velaar-f2341). Not a secret — protection is via
-   Firestore security rules, not obscurity.
+   "RugsCreation Manifest", rugscreation-manifest). Not a secret —
+   protection is via Firestore security rules, not obscurity.
    ============================================================ */
 var FIREBASE_CONFIG = {
-  apiKey: "AIzaSyBJGuf8lcc4KfdWfMKk1WxB7MuMZPVs88U",
-  authDomain: "velaar-f2341.firebaseapp.com",
-  projectId: "velaar-f2341",
-  storageBucket: "velaar-f2341.firebasestorage.app",
-  messagingSenderId: "234782192531",
-  appId: "1:234782192531:web:46133d5ee7f488aa4eee66"
+  apiKey: "AIzaSyDVFfbWLwHj4kW8vZ43vAYV4j6oNDqxIlU",
+  authDomain: "rugscreation-manifest.firebaseapp.com",
+  projectId: "rugscreation-manifest",
+  storageBucket: "rugscreation-manifest.firebasestorage.app",
+  messagingSenderId: "225620085940",
+  appId: "1:225620085940:web:fc5fb42fe55152337fdbe1"
 };
 var FIREBASE_CONFIGURED = FIREBASE_CONFIG.apiKey.indexOf('REPLACE_ME')===-1;
 
@@ -285,33 +285,45 @@ function initFirebase(){
   try{
     firebase.initializeApp(FIREBASE_CONFIG);
     db = firebase.firestore();
+    var settled = false;
+    var listening = false;
+    function startListening(){
+      if(listening) return;
+      listening = true;
+      var docRef = db.collection('manifest').doc('state');
+      docRef.onSnapshot(function(snap){
+        settled = true;
+        if(snap.exists){
+          var data = snap.data();
+          data.orders = data.orders || [];
+          data.invoices = data.invoices || [];
+          data.buyers = data.buyers || DEFAULT_STATE.buyers;
+          STATE = data;
+        } else {
+          docRef.set(DEFAULT_STATE).catch(function(){});
+          STATE = DEFAULT_STATE;
+        }
+        UI.dbReady = true; UI.dbLive = true;
+        rerender();
+      }, function(err){
+        settled = true;
+        db = null;
+        UI.dbReady = true; UI.dbLive = false;
+        UI.dbError = 'database error: '+err.message;
+        rerender();
+      });
+    }
+    /* Wait for the anonymous sign-in to actually land before opening the
+       Firestore listener — starting the listener before auth is attached
+       can get a permanent permission-denied even though sign-in succeeds
+       moments later, since a denied listener does not auto-retry. */
+    firebase.auth().onAuthStateChanged(function(user){
+      if(user) startListening();
+    });
     firebase.auth().signInAnonymously().catch(function(err){
       db = null;
       UI.dbReady = true; UI.dbLive = false;
       UI.dbError = 'sign-in failed: '+err.message;
-      rerender();
-    });
-    var settled = false;
-    var docRef = db.collection('manifest').doc('state');
-    docRef.onSnapshot(function(snap){
-      settled = true;
-      if(snap.exists){
-        var data = snap.data();
-        data.orders = data.orders || [];
-        data.invoices = data.invoices || [];
-        data.buyers = data.buyers || DEFAULT_STATE.buyers;
-        STATE = data;
-      } else {
-        docRef.set(DEFAULT_STATE).catch(function(){});
-        STATE = DEFAULT_STATE;
-      }
-      UI.dbReady = true; UI.dbLive = true;
-      rerender();
-    }, function(err){
-      settled = true;
-      db = null;
-      UI.dbReady = true; UI.dbLive = false;
-      UI.dbError = 'database error: '+err.message;
       rerender();
     });
     setTimeout(function(){
