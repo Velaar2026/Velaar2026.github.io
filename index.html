@@ -1,0 +1,1114 @@
+<meta charset="utf-8">
+<title>RugsCreation Manifest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EAEFE8; --bg-alt:#E1E7DD; --surface:#FFFFFF; --surface-2:#F3F6F1;
+    --border:#C7D0C1; --border-strong:#A9B5A1;
+    --text:#1D2A1B; --text-muted:#58635F; --text-faint:#8A9482;
+    --accent:#2B5F63; --accent-strong:#163C40; --accent-soft:#DCE7E6; --accent-ink:#F4FAF9;
+    --good:#2F6A38; --good-bg:#E3EFE1; --good-border:#B9D6B7;
+    --warn:#93601A; --warn-bg:#F5E9D2; --warn-border:#E1C486;
+    --danger:#963527; --danger-bg:#F5DED8; --danger-border:#E2B4A6;
+    --shadow:0 1px 2px rgba(20,30,18,.07), 0 6px 18px rgba(20,30,18,.07);
+    --radius:10px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12160E; --bg-alt:#181D12; --surface:#1A2015; --surface-2:#202718;
+      --border:#333C28; --border-strong:#47533A;
+      --text:#E7ECE0; --text-muted:#A9B39E; --text-faint:#727A67;
+      --accent:#74BCBF; --accent-strong:#A3D9DB; --accent-soft:#1F3335; --accent-ink:#0C1A1B;
+      --good:#84CC90; --good-bg:#1D3220; --good-border:#335E3A;
+      --warn:#E7B563; --warn-bg:#372A12; --warn-border:#5C481F;
+      --danger:#E4917D; --danger-bg:#3A1D17; --danger-border:#61362A;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 24px rgba(0,0,0,.35);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12160E; --bg-alt:#181D12; --surface:#1A2015; --surface-2:#202718;
+    --border:#333C28; --border-strong:#47533A;
+    --text:#E7ECE0; --text-muted:#A9B39E; --text-faint:#727A67;
+    --accent:#74BCBF; --accent-strong:#A3D9DB; --accent-soft:#1F3335; --accent-ink:#0C1A1B;
+    --good:#84CC90; --good-bg:#1D3220; --good-border:#335E3A;
+    --warn:#E7B563; --warn-bg:#372A12; --warn-border:#5C481F;
+    --danger:#E4917D; --danger-bg:#3A1D17; --danger-border:#61362A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 24px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Source Sans 3', system-ui, -apple-system, sans-serif;
+    font-size:15px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:1180px; margin:0 auto; padding:20px 20px 64px;}
+  h1,h2,h3{font-family:'Big Shoulders Display', system-ui, sans-serif; font-weight:800; text-wrap:balance; margin:0;}
+  .mono{font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums;}
+  a{color:var(--accent);}
+  button{font-family:inherit; cursor:pointer;}
+  input, select, textarea{font-family:inherit; font-size:inherit; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:7px; padding:8px 10px;}
+  input:focus, select:focus, textarea:focus, button:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
+  ::placeholder{color:var(--text-faint);}
+  .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);}
+
+  /* ---- header / manifest strip ---- */
+  .brandbar{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 0 14px; border-bottom:2px solid var(--border-strong); flex-wrap:wrap;}
+  .brandmark{display:flex; align-items:baseline; gap:10px;}
+  .brandmark .stamp{display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:8px; background:var(--accent); color:var(--accent-ink); font-family:'Big Shoulders Display'; font-weight:800; font-size:17px; flex:none;}
+  .brandmark h1{font-size:1.5rem; letter-spacing:.01em; text-transform:uppercase;}
+  .brandmark .sub{font-size:.78rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; margin-left:2px;}
+  .headerbtns{display:flex; gap:8px;}
+  .btn{border:1px solid var(--border-strong); background:var(--surface); color:var(--text); border-radius:7px; padding:8px 14px; font-weight:600; font-size:.88rem; transition:background .12s,border-color .12s;}
+  .btn:hover{background:var(--surface-2);}
+  .btn-accent{background:var(--accent); border-color:var(--accent); color:var(--accent-ink);}
+  .btn-accent:hover{background:var(--accent-strong); border-color:var(--accent-strong);}
+  .btn-quiet{border-color:transparent; background:transparent;}
+  .btn-quiet:hover{background:var(--surface-2);}
+  .btn:disabled{opacity:.5; cursor:not-allowed;}
+  .btn-sm{padding:5px 10px; font-size:.78rem; border-radius:6px;}
+
+  .statstrip{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin:16px 0 22px; box-shadow:var(--shadow);}
+  .stat{background:var(--surface); padding:12px 16px;}
+  .stat .n{font-family:'IBM Plex Mono'; font-weight:600; font-size:1.5rem; font-variant-numeric:tabular-nums;}
+  .stat .n.alert{color:var(--danger);}
+  .stat .lbl{font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); margin-top:2px;}
+
+  /* ---- tabs ---- */
+  .tabs{display:flex; gap:4px; border-bottom:1px solid var(--border); margin-bottom:20px; flex-wrap:wrap;}
+  .tab{padding:10px 16px; border:none; background:none; font-weight:700; font-family:'Big Shoulders Display'; letter-spacing:.02em; text-transform:uppercase; font-size:.95rem; color:var(--text-muted); border-bottom:3px solid transparent; margin-bottom:-1px; border-radius:0;}
+  .tab:hover{color:var(--text);}
+  .tab.active{color:var(--accent-strong); border-bottom-color:var(--accent);}
+  .tab .badge{display:inline-block; margin-left:6px; padding:1px 7px; border-radius:99px; font-family:'IBM Plex Mono'; font-size:.72rem; background:var(--danger-bg); color:var(--danger); vertical-align:1px;}
+  .tab .badge.warn{background:var(--warn-bg); color:var(--warn);}
+
+  .panel-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:14px; flex-wrap:wrap;}
+  .panel-head h2{font-size:1.4rem; text-transform:uppercase; letter-spacing:.01em;}
+  .panel-head .hint{color:var(--text-muted); font-size:.85rem;}
+
+  /* ---- banner / toast ---- */
+  .banner{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 14px; border-radius:8px; margin-bottom:16px; font-size:.88rem; border:1px solid; }
+  .banner.info{background:var(--accent-soft); border-color:var(--border-strong); color:var(--text);}
+  .banner.warn{background:var(--warn-bg); border-color:var(--warn-border); color:var(--warn);}
+  .banner.good{background:var(--good-bg); border-color:var(--good-border); color:var(--good);}
+
+  /* ---- search / filters ---- */
+  .toolbar{display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; align-items:center;}
+  .toolbar input[type=search], .toolbar input[type=text]{min-width:230px; flex:1;}
+  .toolbar select{min-width:150px;}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); box-shadow:var(--shadow);}
+  table{border-collapse:collapse; width:100%; min-width:640px;}
+  thead th{position:sticky; top:0; background:var(--surface-2); text-align:left; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--text-muted); padding:9px 12px; border-bottom:1px solid var(--border); white-space:nowrap;}
+  tbody td{padding:9px 12px; border-bottom:1px solid var(--border); vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr.low td{background:var(--warn-bg);}
+  tbody tr.out td{background:var(--danger-bg);}
+  .num{text-align:right; font-family:'IBM Plex Mono'; font-variant-numeric:tabular-nums;}
+  .muted{color:var(--text-muted);}
+  .faint{color:var(--text-faint); font-size:.82rem;}
+
+  .pill{display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:99px; font-size:.76rem; font-weight:600; border:1px solid;}
+  .pill-good{background:var(--good-bg); color:var(--good); border-color:var(--good-border);}
+  .pill-warn{background:var(--warn-bg); color:var(--warn); border-color:var(--warn-border);}
+  .pill-danger{background:var(--danger-bg); color:var(--danger); border-color:var(--danger-border);}
+  .pill-quiet{background:var(--surface-2); color:var(--text-muted); border-color:var(--border);}
+
+  /* ---- order builder ---- */
+  .order-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:20px; align-items:start;}
+  @media (max-width:820px){ .order-grid{grid-template-columns:1fr;} }
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);}
+  .field{display:flex; flex-direction:column; gap:5px; margin-bottom:14px;}
+  .field label{font-size:.76rem; text-transform:uppercase; letter-spacing:.05em; color:var(--text-muted); font-weight:600;}
+  .field input, .field select{width:100%;}
+  .suggest{border:1px solid var(--border); border-radius:8px; margin-top:6px; overflow:hidden; background:var(--surface);}
+  .suggest button{display:block; width:100%; text-align:left; padding:8px 10px; border:none; background:none; border-bottom:1px solid var(--border); font-size:.86rem; color:var(--text);}
+  .suggest button:last-child{border-bottom:none;}
+  .suggest button:hover{background:var(--surface-2);}
+  .suggest .sname{font-weight:600;}
+  .suggest .smeta{color:var(--text-muted); font-size:.78rem;}
+
+  .ticket{background:var(--surface); border:1px dashed var(--border-strong); border-radius:var(--radius); padding:18px; position:sticky; top:16px;}
+  .ticket h3{font-size:1.05rem; text-transform:uppercase; letter-spacing:.02em; margin-bottom:2px;}
+  .ticket .ticket-sub{color:var(--text-muted); font-size:.82rem; margin-bottom:12px;}
+  .lineitem{display:flex; align-items:flex-start; justify-content:space-between; gap:8px; padding:10px 0; border-bottom:1px solid var(--border);}
+  .lineitem:last-of-type{border-bottom:none;}
+  .lineitem .li-name{font-weight:600; font-size:.9rem;}
+  .lineitem .li-meta{font-size:.78rem; color:var(--text-muted); font-family:'IBM Plex Mono';}
+  .lineitem .li-right{display:flex; align-items:center; gap:8px; flex:none;}
+  .qtybox{width:56px; text-align:center; padding:5px 4px;}
+  .iconbtn{border:1px solid var(--border); background:var(--surface); border-radius:6px; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:.85rem; line-height:1;}
+  .iconbtn:hover{background:var(--danger-bg); color:var(--danger); border-color:var(--danger-border);}
+  .ticket-empty{color:var(--text-faint); font-size:.86rem; padding:16px 0; text-align:center;}
+  .ticket-actions{display:flex; gap:8px; margin-top:14px;}
+  .ticket-actions .btn{flex:1;}
+
+  .emailbox{margin-top:14px; padding-top:14px; border-top:1px solid var(--border);}
+  .emailbox textarea{width:100%; min-height:170px; resize:vertical; font-family:'IBM Plex Mono'; font-size:.8rem; line-height:1.55;}
+
+  /* ---- history ---- */
+  .histcard{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); margin-bottom:12px; overflow:hidden;}
+  .histcard summary{list-style:none; cursor:pointer; padding:13px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .histcard summary::-webkit-details-marker{display:none;}
+  .histcard .hleft{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .histcard .hbuyer{font-weight:700; font-family:'Big Shoulders Display'; text-transform:uppercase; letter-spacing:.02em; font-size:1.05rem;}
+  .histcard .htime{color:var(--text-muted); font-size:.8rem; font-family:'IBM Plex Mono';}
+  .histcard .hbody{padding:0 16px 16px; border-top:1px solid var(--border);}
+  .histcard .hbody table{margin-top:12px;}
+
+  /* ---- settings ---- */
+  .settingswrap{position:fixed; inset:0; background:rgba(10,14,8,.45); display:flex; align-items:flex-start; justify-content:center; padding:60px 16px; z-index:40;}
+  .settingsbox{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); width:100%; max-width:440px; padding:22px;}
+  .settingsbox h2{font-size:1.2rem; text-transform:uppercase; margin-bottom:14px;}
+  .settings-close{display:flex; justify-content:flex-end;}
+
+  /* ---- login ---- */
+  .loginwrap{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;}
+  .loginbox{width:100%; max-width:360px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:30px 28px;}
+  .loginbox .stamp{display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:9px; background:var(--accent); color:var(--accent-ink); font-family:'Big Shoulders Display'; font-weight:800; font-size:21px; margin-bottom:14px;}
+  .loginbox h1{font-size:1.3rem; text-transform:uppercase; letter-spacing:.01em; margin-bottom:2px;}
+  .loginbox .loginsub{color:var(--text-muted); font-size:.85rem; margin-bottom:22px;}
+  .loginbox .btn-accent{width:100%; padding:10px 14px;}
+  .loginerr{background:var(--danger-bg); color:var(--danger); border:1px solid var(--danger-border); border-radius:7px; padding:8px 11px; font-size:.84rem; margin-bottom:14px;}
+  .loginuserfixed{padding:8px 10px; border:1px solid var(--border); border-radius:7px; background:var(--surface-2); color:var(--text-muted);}
+
+  .footnote{margin-top:30px; color:var(--text-faint); font-size:.78rem; text-align:center;}
+  .savingdot{display:inline-block; width:7px; height:7px; border-radius:99px; background:var(--accent); margin-right:6px; animation:pulse 1s infinite ease-in-out;}
+  @media (prefers-reduced-motion:reduce){.savingdot{animation:none;}}
+  @keyframes pulse{0%,100%{opacity:.35;}50%{opacity:1;}}
+
+  @media (max-width:560px){
+    .statstrip{grid-template-columns:repeat(2,1fr);}
+    #app{padding:14px 12px 48px;}
+  }
+</style>
+<body>
+<!--
+  ============================================================
+  LIVE DATABASE — already provisioned, nothing to fill in.
+  This page reads/writes a single row in a Supabase Postgres
+  table (project "rugscreation-manifest"). The URL and anon key
+  below are safe to keep in the page — real protection comes
+  from the Row Level Security policies on the manifest_state
+  table, not from hiding these values.
+  ============================================================
+-->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<div id="app" role="main"></div>
+<script id="app-state" type="application/json">{"meta": {"threshold": 5, "companyName": "RugsCreation", "updated": null}, "buyers": ["Giga", "Lutz", "Spits", "Tanju", "Wayfair", "fonq"], "inventory": [{"id": "r1", "supplier": 20082154, "sku": "VLR2017987", "ean": "8720589919235", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "200 R", "stock": 29, "price": 46.55}, {"id": "r2", "supplier": 20082157, "sku": "VLR2017982", "ean": "8720589919266", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "150 R", "stock": 24, "price": 26.6}, {"id": "r3", "supplier": 20082268, "sku": "VLR2090074", "ean": "8720618102386", "name": "Vloerkleed Shelly Zickzack", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 27, "price": 85.95}, {"id": "r4", "supplier": 20082395, "sku": "VLR2090199", "ean": "8721161151777", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 25, "price": 36.18}, {"id": "r5", "supplier": 20082266, "sku": "VLR2090072", "ean": "08720618102362", "name": "Velaar Geweven Tapijt in Brown,Natural", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 23, "price": 123.12}, {"id": "r6", "supplier": 20082392, "sku": "VLR2090196", "ean": "8721161151746", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115", "stock": 21, "price": 36.18}, {"id": "r7", "supplier": 20082223, "sku": "VLR2090029", "ean": "08720589919921", "name": "Vloerkleed Flocus Grijs", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 21, "price": 96.69}, {"id": "r8", "supplier": 20082382, "sku": "VLR2090186", "ean": "8721161151463", "name": "TAPIJT ONDERVLOER GRIJS", "fibre": "100% Polyester", "size": "155x225 cm", "stock": 20, "price": 25.3}, {"id": "r9", "supplier": 20082160, "sku": "VLR2090012", "ean": "8720589919297", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "80%Jute 20%Cotton", "size": "200 R", "stock": 15, "price": 46.55}, {"id": "r10", "supplier": 20082391, "sku": "VLR2090195", "ean": "8721161151739", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 20, "price": 104.03}, {"id": "r11", "supplier": 20082221, "sku": "VLR2090027", "ean": "8720589919907", "name": "Vloerkleed Flocus Beige", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 20, "price": 96.69}, {"id": "r12", "supplier": 20082265, "sku": "VLR2090071", "ean": " 08720618102355", "name": "Vloerkleed McKenna Natuur/Grijs", "fibre": "100 % Wool", "size": "190*290", "stock": 19, "price": 113.42}, {"id": "r13", "supplier": 20082149, "sku": "VLR2009630", "ean": "8720589919181", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "150 R", "stock": 10, "price": 26.6}, {"id": "r14", "supplier": 20082396, "sku": "VLR2090200", "ean": "8721161151784", "name": "MILAN KÖNIGLICH HELDONKER GRIJS TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 18, "price": 104.03}, {"id": "r15", "supplier": 20082159, "sku": "VLR2090010", "ean": "8720589919280", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "80%Jute 20%Cotton", "size": "150 R", "stock": 13, "price": 26.6}, {"id": "r16", "supplier": 20082405, "sku": "VLR2090209", "ean": "8721161151869", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 17, "price": 104.03}, {"id": "r17", "supplier": 20082225, "sku": "VLR2090031", "ean": "8720589919945", "name": "Vloerkleed Flocus Antraciet", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 17, "price": 96.69}, {"id": "r18", "supplier": 20082267, "sku": "VLR2090073", "ean": "  08720618102379", "name": "Velaar Geweven Tapijt in Brown,Natural", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 17, "price": 184.34}, {"id": "r19", "supplier": 20082264, "sku": "VLR2090070", "ean": "8720618102348", "name": "Vloerkleed McKenna Natuur/Grijs", "fibre": "100 % Wool", "size": "160*230", "stock": 16, "price": 75.75}, {"id": "r20", "supplier": 20082259, "sku": "VLR2090065", "ean": "08720618102294", "name": "Geometric 160cm X 230cm Area Rug", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 16, "price": 118.02}, {"id": "r21", "supplier": 20082229, "sku": "VLR2090035", "ean": "08720589919983", "name": "Vloerkleed Smyrna Beige", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 16, "price": 116.92}, {"id": "r22", "supplier": 20082384, "sku": "VLR2090188", "ean": "8721161151487", "name": "TAPIJT ONDERVLOER GRIJS", "fibre": "100% Polyester", "size": "190x290 cm", "stock": 15, "price": 31.61}, {"id": "r23", "supplier": 20082404, "sku": "VLR2090208", "ean": "8721161151661", "name": "TAPIJT ONDERVLOER GRIJS", "fibre": "100% Polyester", "size": "115x175 cm", "stock": 15, "price": 11.53}, {"id": "r24", "supplier": 20082156, "sku": "VLR2017985", "ean": "8720589919259", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "200 R", "stock": 15, "price": 46.55}, {"id": "r25", "supplier": 20082388, "sku": "VLR2090192", "ean": "8721161151708", "name": "MILAN KÖNIGLICH HELLBLUSH TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 14, "price": 104.03}, {"id": "r26", "supplier": 20082227, "sku": "VLR2090033", "ean": "08720589919969", "name": "Dutch Living Rug Smyrna cream", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 15, "price": 116.92}, {"id": "r27", "supplier": 20082383, "sku": "VLR2090187", "ean": "8721161151470", "name": "TAPIJT ONDERVLOER GRIJS", "fibre": "100% Polyester", "size": "185x285 cm", "stock": 14, "price": 30.23}, {"id": "r28", "supplier": 20082401, "sku": "VLR2090205", "ean": "8721161151838", "name": "MILAN KÖNIGLICH HELLMOSTERD TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 12, "price": 36.18}, {"id": "r29", "supplier": 20082309, "sku": "VLR2090116", "ean": "8721161151494", "name": "DENIM GEWEVEN TAPIJT", "fibre": "80% Wool 20% Cotton", "size": "160x230 cm", "stock": 12, "price": 106.4}, {"id": "r30", "supplier": 20082397, "sku": "VLR2090201", "ean": "8721161151791", "name": "MILAN KÖNIGLICH HELDONKER GRIJS TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 12, "price": 36.18}, {"id": "r31", "supplier": 20082253, "sku": "VLR2090059", "ean": "08720618102232", "name": "Vloerkleed Acyee", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 12, "price": 89.24}, {"id": "r32", "supplier": 20082257, "sku": "VLR2090063", "ean": " 08720618102270", "name": "Vloerkleed Bermudez", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 9, "price": 118.02}, {"id": "r33", "supplier": 20082177, "sku": "VLC1929953", "ean": "8720589919464", "name": "MILAN KÖNIGLICH HELLGRAU TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "160 x 230 Cm", "stock": 10, "price": 93.1}, {"id": "r34", "supplier": 20082222, "sku": "VLR2090028", "ean": " 08720589919914", "name": "Vloerkleed Flocus Beige", "fibre": "", "size": "190*290", "stock": 12, "price": 144.77}, {"id": "r35", "supplier": 20082224, "sku": "VLR2090030", "ean": "08720589919938", "name": "Vloerkleed Flocus Grijs", "fibre": "", "size": "190*290", "stock": 12, "price": 144.77}, {"id": "r36", "supplier": 20082228, "sku": "VLR2090034", "ean": "08720589919976", "name": "Dutch Living Rug Smyrna cream", "fibre": "", "size": "190*290", "stock": 12, "price": 175.06}, {"id": "r37", "supplier": 20082269, "sku": "VLR2090075", "ean": "08720618102393", "name": "Vloerkleed Shelly Zickzack", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 11, "price": 128.69}, {"id": "r38", "supplier": 20082239, "sku": "VLR2090045", "ean": "8720618102096", "name": "Dutch Living McKenna Carpet, Grey,", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 10, "price": 110.73}, {"id": "r39", "supplier": 20082272, "sku": "VLR2090078", "ean": "08720618102423", "name": "Dutch Living Rug Wayne natural", "fibre": "100 % Cotton", "size": "190*290", "stock": 9, "price": 101.45}, {"id": "r40", "supplier": 20082158, "sku": "VLR2017983", "ean": "8720589919273", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "200 R", "stock": 10, "price": 46.55}, {"id": "r41", "supplier": 20082403, "sku": "VLR2090207", "ean": "8721161151852", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 10, "price": 36.18}, {"id": "r42", "supplier": 20082298, "sku": "VLR2090104", "ean": "08720618102683", "name": "", "fibre": "", "size": "195*300", "stock": 10, "price": 138.93}, {"id": "r43", "supplier": 20082271, "sku": "VLR2090077", "ean": "8720618102416", "name": "Dutch Living Rug Wayne natural", "fibre": "100 % Cotton", "size": "160*230", "stock": 8, "price": 67.75}, {"id": "r44", "supplier": 20082311, "sku": "VLR2090118", "ean": "8721161151500", "name": "DRIFTWOOD TEXTURED GEWEVEN TAPIJT", "fibre": "Face : 100% Jute Back 100% Cotton", "size": "160x230 cm", "stock": 9, "price": 106.4}, {"id": "r45", "supplier": 20082393, "sku": "VLR2090197", "ean": "8721161151753", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 9, "price": 104.03}, {"id": "r46", "supplier": 20082270, "sku": "VLR2090076", "ean": " 08720618102409", "name": "Vloerkleed Babin-Wollform", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 9, "price": 120.92}, {"id": "r47", "supplier": 20082260, "sku": "VLR2090066", "ean": " 08720618102300", "name": "Vloerkleed Kiana", "fibre": "Front-90 % WOOL 10 % Cotton\nBack -100 % Cotton", "size": "160*230", "stock": 9, "price": 85.95}, {"id": "r48", "supplier": 20082348, "sku": "VLR2090152", "ean": "8721161151241", "name": "FLAWLESS GEWEVEN GRIJS BRUIN TAPIJT", "fibre": "Face - 100% Wool\nBack - 100% Cotton", "size": "160x230 cm", "stock": 5, "price": 85.9}, {"id": "r49", "supplier": 20082394, "sku": "VLR2090198", "ean": "8721161151760", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 8, "price": 36.18}, {"id": "r50", "supplier": 20082255, "sku": "VLR2090061", "ean": "8720618102256", "name": "Velaar Geweven Tapijt in Natural", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 8, "price": 89.24}, {"id": "r51", "supplier": 20082263, "sku": "VLR2090069", "ean": "8720618102331", "name": "Dutch Living Carpet Koah natural/black", "fibre": "Front-55 % Cotton 45 Polyester\nBack-100 % Cotton", "size": "190*290", "stock": 8, "price": 122.7}, {"id": "r52", "supplier": 20082312, "sku": "VLR2090119", "ean": "8721161151517", "name": "AVON GEWEVEN TAPIJT", "fibre": "Face : 50% Wool 50% Jute Back 100% Cotton", "size": "160x230 cm", "stock": 7, "price": 106.4}, {"id": "r53", "supplier": 20082297, "sku": "VLR2090103", "ean": "8720618102676", "name": "", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 7, "price": 87.4}, {"id": "r54", "supplier": 20082309, "sku": "VLR2090115", "ean": "8720618102799", "name": "", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 7, "price": 87.4}, {"id": "r55", "supplier": 20082247, "sku": "VLR2090053", "ean": "8720618102171", "name": "Vloerkleed Anarah", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 7, "price": 88.69}, {"id": "r56", "supplier": 20082231, "sku": "VLR2090037", "ean": "08720618102010", "name": "Dutch Living Smyrna Carpet, Grey,", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 7, "price": 116.92}, {"id": "r57", "supplier": 20082240, "sku": "VLR2090046", "ean": "08720618102102", "name": "Dutch Living McKenna Carpet, Grey,", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 7, "price": 165.79}, {"id": "r58", "supplier": 20082249, "sku": "VLR2090055", "ean": "8720618102195", "name": "Vloerkleed Celso", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 7, "price": 89.24}, {"id": "r59", "supplier": 20082261, "sku": "VLR2090067", "ean": " 08720618102317", "name": "Vloerkleed Kiana", "fibre": "Front-90 % WOOL 10 % Cotton\nBack -100 % Cotton", "size": "190*290", "stock": 7, "price": 128.69}, {"id": "r60", "supplier": 20082162, "sku": "VLR2008892", "ean": "8720589919310", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "200 R", "stock": 3, "price": 47.5}, {"id": "r61", "supplier": 20082354, "sku": "VLR2090158", "ean": "8721161151302", "name": "HEATHER GEWEVEN BEIGE ZWART TAPIJT", "fibre": "90% Polyester 10% Cotton", "size": "160x230 cm", "stock": 5, "price": 100.7}, {"id": "r62", "supplier": 20082356, "sku": "VLR2090160", "ean": "8721161151326", "name": "HEATHER GEWEVEN BEIGE ZWART TAPIJT", "fibre": "90% Polyester 10% Cotton", "size": "160x230 cm", "stock": 6, "price": 100.7}, {"id": "r63", "supplier": 20082299, "sku": "VLR2090105", "ean": "8720618102690", "name": "", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 6, "price": 87.4}, {"id": "r64", "supplier": 20082226, "sku": "VLR2090032", "ean": "08720589919952", "name": "Vloerkleed Flocus Antraciet", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 6, "price": 144.77}, {"id": "r65", "supplier": 20082230, "sku": "VLR2090036", "ean": "8720589919990", "name": "Vloerkleed Smyrna Beige", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 6, "price": 175.06}, {"id": "r66", "supplier": 20082232, "sku": "VLR2090038", "ean": " 08720618102027", "name": "Dutch Living Smyrna Carpet, Grey,", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 6, "price": 175.06}, {"id": "r67", "supplier": 20082254, "sku": "VLR2090060", "ean": "08720618102249", "name": "Vloerkleed Acyee", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 6, "price": 133.62}, {"id": "r68", "supplier": 20082256, "sku": "VLR2090062", "ean": "08720618102263", "name": "Velaar Geweven Tapijt in Natural", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 6, "price": 133.62}, {"id": "r69", "supplier": 20082327, "sku": "VLR2090134", "ean": "8721161151562", "name": "MILAN KÖNIGLICH HELLMULTI TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "200x300 cm", "stock": 5, "price": 180.28}, {"id": "r70", "supplier": 20082340, "sku": "VLR2090147", "ean": "8721161151203", "name": "PATIO GEWEVEN ZWART TAPIJT", "fibre": "100% Polyester", "size": "135x230 cm", "stock": 3, "price": 24.02}, {"id": "r71", "supplier": 20082153, "sku": "VLR2017986", "ean": "8720589919228", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "150 R", "stock": 2, "price": 26.6}, {"id": "r72", "supplier": 20082150, "sku": "VLR2009631", "ean": "8720589919198", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "200 R", "stock": 2, "price": 46.5}, {"id": "r73", "supplier": 20082161, "sku": "VLR2008891", "ean": "8720589919303", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "150 R", "stock": 2, "price": 27.55}, {"id": "r74", "supplier": 20082152, "sku": "VLR2004201", "ean": "8720589919211", "name": "JAIPUR KLASSISCH BUNT TEPPICH", "fibre": "50%Jute 50% Recycled Cotton", "size": "200 R", "stock": 3, "price": 44.65}, {"id": "r75", "supplier": 20082352, "sku": "VLR2090156", "ean": "8721161151289", "name": "HEATHER GEWEVEN NATUURLIJK ZWART TAPIJT", "fibre": "90% Polyester 10% Cotton", "size": "160x230 cm", "stock": 5, "price": 100.7}, {"id": "r76", "supplier": 20082305, "sku": "VLR2090111", "ean": "08720618102751", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 5, "price": 100.7}, {"id": "r77", "supplier": 20082398, "sku": "VLR2090202", "ean": "8721161151807", "name": "MILAN KÖNIGLICH HELTERRACOTTATEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 4, "price": 104.03}, {"id": "r78", "supplier": 20082176, "sku": "VLC1929952", "ean": "8720589919457", "name": "MILAN KÖNIGLICH GRAU TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "200 x 300 Cm", "stock": 4, "price": 152.0}, {"id": "r79", "supplier": 20082185, "sku": "VLC1929905", "ean": "8720589919549", "name": "MILAN KÖNIGLICH ROSA TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "160 x 230 Cm", "stock": 4, "price": 102.6}, {"id": "r80", "supplier": 20082155, "sku": "VLR2017984", "ean": "8720589919242", "name": "JAIPUR KLASSISCH TEPPICH", "fibre": "100%Jute", "size": "150 R", "stock": 1, "price": 26.6}, {"id": "r81", "supplier": 20082376, "sku": "VLR2090180", "ean": "8721161151401", "name": "ATMORE GEWEVEN DONKER GRIJS TAPIJT", "fibre": "face - 100% Wool \nBack - 100% Cotton", "size": "160x230 cm", "stock": 4, "price": 85.9}, {"id": "r82", "supplier": 20082378, "sku": "VLR2090182", "ean": "8721161151425", "name": "ATMORE GEWEVEN GRIJS TAPIJT", "fibre": "face - 100% Wool \nBack - 100% Cotton", "size": "160x230 cm", "stock": 4, "price": 85.9}, {"id": "r83", "supplier": 20082315, "sku": "VLR2090122", "ean": "8721161151524", "name": "ATLAS GEWEVEN TAPIJT", "fibre": "Face : 50% Wool 50% Viscose Back 100% Cotton", "size": "160x230 cm", "stock": 4, "price": 111.34}, {"id": "r84", "supplier": 20082366, "sku": "VLR2090170", "ean": "8721161151609", "name": "URBAN GRIDLINE GEWEVEN GRIJS TAPIJT", "fibre": "Face- 100% Wool Back 100% Cotton", "size": "160x230 cm", "stock": 4, "price": 105.63}, {"id": "r85", "supplier": 20082302, "sku": "VLR2090108", "ean": "08720618102720", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 4, "price": 100.7}, {"id": "r86", "supplier": 20082386, "sku": "VLR2090190", "ean": "8721161151685", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 3, "price": 36.18}, {"id": "r87", "supplier": 20082248, "sku": "VLR2090054", "ean": "08720618102188", "name": "Vloerkleed Anarah", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 4, "price": 132.8}, {"id": "r88", "supplier": 20082238, "sku": "VLR2090044", "ean": "8720618102089", "name": "Vloerkleed Acyee Grijs", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 4, "price": 194.44}, {"id": "r89", "supplier": 20082262, "sku": "VLR2090068", "ean": "08720618102324", "name": "Dutch Living Carpet Koah natural/black", "fibre": "Front-55 % Cotton 45 Polyester\nBack-100 % Cotton", "size": "160*230", "stock": 3, "price": 81.95}, {"id": "r90", "supplier": 20082183, "sku": "VLC1929900", "ean": "8720589919525", "name": "MILAN DOPPELMUSTER BEIGE TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "160 x 230 Cm", "stock": 3, "price": 102.6}, {"id": "r91", "supplier": 20082358, "sku": "VLR2090162", "ean": "8721161151340", "name": "ASHEN GEWEVEN NATUURLIJK ZWART TAPIJT", "fibre": "Pile 100% Wool\nBacking: Cotton", "size": "160x230 cm", "stock": 3, "price": 96.0}, {"id": "r92", "supplier": 20082300, "sku": "VLR2090106", "ean": " 08720618102706", "name": "MILAN KÖNIGLICH BLACK TEPPICH", "fibre": "", "size": "195*300", "stock": 4, "price": 138.93}, {"id": "r93", "supplier": 20082317, "sku": "VLR2090124", "ean": "8721161151036", "name": "AQUAWAVE GEWEVEN GROENTE KUSSEN", "fibre": "", "size": "45x45 cm", "stock": 4, "price": 8.38}, {"id": "r94", "supplier": 20082319, "sku": "VLR2090126", "ean": "8721161151050", "name": "AQUAWAVE GEWEVEN GRIJS KUSSEN", "fibre": "", "size": "45x45 cm", "stock": 4, "price": 8.38}, {"id": "r95", "supplier": 20082344, "sku": "VLR2090149", "ean": "8721161151210", "name": "PATIO GEWEVEN ZWART NATUURLIJK TAPIJT", "fibre": "100% Polyester", "size": "135x230 cm", "stock": 3, "price": 24.02}, {"id": "r96", "supplier": 20082353, "sku": "VLR2090157", "ean": "8721161151296", "name": "HEATHER GEWEVEN NATUURLIJK ZWART TAPIJT", "fibre": "90% Polyester 10% Cotton", "size": "195x300 cm", "stock": 3, "price": 160.1}, {"id": "r97", "supplier": 20082355, "sku": "VLR2090159", "ean": "8721161151319", "name": "HEATHER GEWEVEN BEIGE ZWART TAPIJT", "fibre": "90% Polyester 10% Cotton", "size": "195x300 cm", "stock": 3, "price": 160.1}, {"id": "r98", "supplier": 20082374, "sku": "VLR2090178", "ean": "8721161151647", "name": "ATMORE GEWEVEN GEBLOTEN WIT TAPIJT", "fibre": "face - 100% Polyester \nBack - 100% Cotton", "size": "160x230 cm", "stock": 3, "price": 61.2}, {"id": "r99", "supplier": 20082363, "sku": "VLR2090167", "ean": "8721161151579", "name": "EBONY GEWEVEN ZWART TAPIJT", "fibre": "Face - 100% Viscose \nBack - 100% Cotton", "size": "195x300 cm", "stock": 3, "price": 175.0}, {"id": "r100", "supplier": 20082377, "sku": "VLR2090181", "ean": "8721161151418", "name": "ATMORE GEWEVEN DONKER GRIJS TAPIJT", "fibre": "face - 100% Wool \nBack - 100% Cotton", "size": "195x300 cm", "stock": 3, "price": 136.55}, {"id": "r101", "supplier": 20082364, "sku": "VLR2090168", "ean": "8721161151586", "name": "ECRU TEXTURED GEWEVEN BEIGE TAPIJT", "fibre": "Face- 100% Wool Back 100% Cotton", "size": "160x230 cm", "stock": 3, "price": 105.63}, {"id": "r102", "supplier": 20082365, "sku": "VLR2090169", "ean": "8721161151593", "name": "ECRU TEXTURED GEWEVEN BEIGE TAPIJT", "fibre": "Face- 100% Wool Back 100% Cotton", "size": "195x300 cm", "stock": 3, "price": 168.0}, {"id": "r103", "supplier": 20082284, "sku": "VLR2090090", "ean": "08720618102546", "name": "MILAN KÖNIGLICH HELLLEGEND TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 2, "price": 100.7}, {"id": "r104", "supplier": 20082304, "sku": "VLR2090110", "ean": "08720618102744", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 3, "price": 160.08}, {"id": "r105", "supplier": 20082333, "sku": "VLR2090140", "ean": "8721161151135", "name": "VANESSA KÖNIGLICH HELLBLAU TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 3, "price": 175.77}, {"id": "r106", "supplier": 20082335, "sku": "VLR2090142", "ean": "8721161151159", "name": "VANESSA KÖNIGLICH HELLGRAU TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 3, "price": 175.77}, {"id": "r107", "supplier": 20082219, "sku": "VLR2090025", "ean": "8720589919884", "name": "Vloerkleed Verona Beige/Wit", "fibre": "Front-100 % Polyester\nBack-100 % Cotton", "size": "190*290", "stock": 3, "price": 102.27}, {"id": "r108", "supplier": 20082250, "sku": "VLR2090056", "ean": "  08720618102201", "name": "Vloerkleed Celso", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 3, "price": 133.62}, {"id": "r109", "supplier": 20082237, "sku": "VLR2090043", "ean": "8720618102072", "name": "Vloerkleed Acyee Grijs", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 3, "price": 129.86}, {"id": "r110", "supplier": 20082186, "sku": "VLC1929906", "ean": "8720589919556", "name": "MILAN KÖNIGLICH ROSA TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "200 x 300 Cm", "stock": 1, "price": 166.6}, {"id": "r111", "supplier": 20082326, "sku": "VLR2090133", "ean": "8721161151555", "name": "MILAN KÖNIGLICH HELLMULTI TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "160x230 cm", "stock": 3, "price": 110.57}, {"id": "r112", "supplier": 20082178, "sku": "VLC1929954", "ean": "8720589919471", "name": "MILAN KÖNIGLICH HELLGRAU TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "200 x 300 Cm", "stock": 2, "price": 152.0}, {"id": "r113", "supplier": 20082368, "sku": "VLR2090172", "ean": "8721161151364", "name": "ATMORE GEWEVEN GRIJS TAPIJT", "fibre": "face - 100% Polyester \nBack - 100% Cotton", "size": "160x230 cm", "stock": 2, "price": 61.2}, {"id": "r114", "supplier": 20082369, "sku": "VLR2090173", "ean": "8721161151371", "name": "ATMORE GEWEVEN GRIJS TAPIJT", "fibre": "face - 100% Polyester \nBack - 100% Cotton", "size": "195x300 cm", "stock": 2, "price": 97.3}, {"id": "r115", "supplier": 20082313, "sku": "VLR2090120", "ean": "8721161151005", "name": "SANDSTONE GEWEVEN TAPIJT", "fibre": "Face : 100% Wool Back 100% Cotton", "size": "160x230 cm", "stock": 2, "price": 86.66}, {"id": "r116", "supplier": 20082314, "sku": "VLR2090121", "ean": "8721161151012", "name": "ABASCA GEWEVEN TAPIJT", "fibre": "Face : 100% Wool Back 100% Cotton", "size": "160x230 cm", "stock": 2, "price": 111.34}, {"id": "r117", "supplier": 20082307, "sku": "VLR2090113", "ean": "08720618102775", "name": "", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 2, "price": 87.4}, {"id": "r118", "supplier": 20082295, "sku": "VLR2090101", "ean": " 08720618102652", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 2, "price": 100.7}, {"id": "r119", "supplier": 20082303, "sku": "VLR2090109", "ean": "08720618102737", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 1, "price": 100.7}, {"id": "r120", "supplier": 20082292, "sku": "VLR2090098", "ean": "8720618102621", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 2, "price": 160.08}, {"id": "r121", "supplier": 20082328, "sku": "VLR2090135", "ean": "8721161151104", "name": "VANESSA KÖNIGLICH HELLGOLDEN TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 1, "price": 110.57}, {"id": "r122", "supplier": 20082336, "sku": "VLR2090143", "ean": "8721161151166", "name": "VANESSA KÖNIGLICH HELLBEIGE TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 2, "price": 110.57}, {"id": "r123", "supplier": 20082337, "sku": "VLR2090144", "ean": "8721161151173", "name": "VANESSA KÖNIGLICH HELLBEIGE TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 2, "price": 175.77}, {"id": "r124", "supplier": 20082385, "sku": "VLR2090189", "ean": "8721161151678", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195x195 cm", "stock": 1, "price": 104.03}, {"id": "r125", "supplier": 20082218, "sku": "VLR2090024", "ean": "8720589919877", "name": "Vloerkleed Verona Beige/Wit", "fibre": "Front-100 % Polyester\nBack-100 % Cotton", "size": "160*230", "stock": 2, "price": 68.3}, {"id": "r126", "supplier": 20082220, "sku": "VLR2090026", "ean": "08720589919891", "name": "Vloerkleed Verona Beige/Wit", "fibre": "Front-100 % Polyester\nBack-100 % Cotton", "size": "160*230", "stock": 2, "price": 68.3}, {"id": "r127", "supplier": 20082233, "sku": "VLR2090039", "ean": "  08720618102034", "name": "Vloerkleed Acyee Crème", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 2, "price": 129.86}, {"id": "r128", "supplier": 20082243, "sku": "VLR2090049", "ean": "8720618102133", "name": "Dutch Living Rug McKenna cream", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 2, "price": 110.73}, {"id": "r129", "supplier": 20082244, "sku": "VLR2090050", "ean": "8720618102140", "name": "Dutch Living Rug McKenna cream", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 2, "price": 165.79}, {"id": "r130", "supplier": 20082246, "sku": "VLR2090052", "ean": "8720618102164", "name": "Vloerkleed Pastrana Donkergrijs", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 2, "price": 132.8}, {"id": "r131", "supplier": 20082258, "sku": "VLR2090064", "ean": "8720618102287", "name": "Vloerkleed Bermudez", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 2, "price": 176.71}, {"id": "r132", "supplier": 20082359, "sku": "VLR2090163", "ean": "8721161151357", "name": "ASHEN GEWEVEN NATUURLIJK ZWART TAPIJT", "fibre": "Pile 100% Wool\nBacking: Cotton", "size": "195x300 cm", "stock": 1, "price": 152.25}, {"id": "r133", "supplier": 20082318, "sku": "VLR2090125", "ean": "8721161151043", "name": "AQUAWAVE GEWEVEN BEIGE KUSSEN", "fibre": "", "size": "45x45 cm", "stock": 2, "price": 8.38}, {"id": "r134", "supplier": 20082320, "sku": "VLR2090127", "ean": "8721161151067", "name": "RIBBED GEWEVEN HEMELSBLAUW POEF", "fibre": "Cover - 100% Viscose Filling Tharmacol beans", "size": "40x40x45 cm", "stock": 1, "price": 36.22}, {"id": "r135", "supplier": 20082370, "sku": "VLR2090174", "ean": "8721161151623", "name": "ATMORE GEWEVEN BEIGE TAPIJT", "fibre": "face - 100% Polyester \nBack - 100% Cotton", "size": "160x230 cm", "stock": 1, "price": 61.2}, {"id": "r136", "supplier": 20082371, "sku": "VLR2090175", "ean": "8721161151630", "name": "ATMORE GEWEVEN BEIGE TAPIJT", "fibre": "face - 100% Polyester \nBack - 100% Cotton", "size": "195x300 cm", "stock": 1, "price": 97.3}, {"id": "r137", "supplier": 20082379, "sku": "VLR2090183", "ean": "8721161151432", "name": "ATMORE GEWEVEN GRIJS TAPIJT", "fibre": "face - 100% Wool \nBack - 100% Cotton", "size": "195x300 cm", "stock": 0, "price": 136.53}, {"id": "r138", "supplier": 20082347, "sku": "VLR2090151", "ean": "8721161151234", "name": "FLAWLESS GEWEVEN BRUIN TAPIJT", "fibre": "Face - 100% Wool\nBack - 100% Cotton", "size": "195x300 cm", "stock": 0, "price": 136.53}, {"id": "r139", "supplier": 20082346, "sku": "VLR2090150", "ean": "8721161151227", "name": "FLAWLESS GEWEVEN BRUIN TAPIJT", "fibre": "Face - 100% Wool\nBack - 100% Cotton", "size": "160x230 cm", "stock": 1, "price": 85.9}, {"id": "r140", "supplier": 20082289, "sku": "VLR2090095", "ean": "08720618102591", "name": "MILAN KÖNIGLICH HELLBLUSH TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 0, "price": 100.7}, {"id": "r141", "supplier": 20082329, "sku": "VLR2090136", "ean": "8721161151111", "name": "VANESSA KÖNIGLICH HELLGOLDEN TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 0, "price": 175.77}, {"id": "r142", "supplier": 20082339, "sku": "VLR2090146", "ean": "8721161151197", "name": "VANESSA KÖNIGLICH HELLCREME TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "195*300", "stock": 1, "price": 175.77}, {"id": "r143", "supplier": 20082390, "sku": "VLR2090192", "ean": "8721161151722", "name": "MILAN KÖNIGLICH HELL TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 0, "price": 39.65}, {"id": "r144", "supplier": 20082332, "sku": "VLR2090139", "ean": "8721161151128", "name": "VANESSA KÖNIGLICH HELLBLAU TEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "160*230", "stock": 0, "price": 39.65}, {"id": "r145", "supplier": 20082399, "sku": "VLR2090203", "ean": "8721161151814", "name": "MILAN KÖNIGLICH HELTERRACOTTATEPPICH", "fibre": "FRONT- 100% Viscose\nBack- 100% Cotton", "size": "115x115 cm", "stock": 1, "price": 36.18}, {"id": "r146", "supplier": 20082236, "sku": "VLR2090042", "ean": "8720618102065", "name": "Vloerkleed Acyee Beige", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "190*290", "stock": 1, "price": 129.86}, {"id": "r147", "supplier": 20082251, "sku": "VLR2090057", "ean": "8720618102218", "name": "Dutch Living Bermudez Rug Grey", "fibre": "Front-100 % Wool\nBack-100 % Cotton", "size": "160*230", "stock": 1, "price": 84.14}, {"id": "r148", "supplier": 20082180, "sku": "VLC1929956", "ean": "8720589919495", "name": "MILAN KÖNIGLICH SAHNE TEPPICH", "fibre": "Pile 100% Viscose\nBacking: Cotton", "size": "200 x 300 Cm", "stock": 0, "price": 152.0}, {"id": "r149", "supplier": 20082285, "sku": "VLR2090091", "ean": "8720618102553", "name": "Berlin Sage Green Rug 195x300cm", "fibre": "", "size": "195*300", "stock": 0, "price": 138.93}, {"id": "r150", "supplier": 20082308, "sku": "VLR2090114", "ean": "8720618102782", "name": "", "fibre": "", "size": "195*300", "stock": 1, "price": 138.93}, {"id": "r151", "supplier": 20082323, "sku": "VLR2090130", "ean": "8721161151098", "name": "RIBBED GEWEVEN GRIJS POEF", "fibre": "", "size": "40x40x45 cm", "stock": 1, "price": 36.22}], "orders": [], "invoices": []}</script>
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   SUPABASE CONFIG — this project is already live (org "Rugs
+   Creation", project "rugscreation-manifest"). Not a secret —
+   protection is via Row Level Security, not obscurity.
+   ============================================================ */
+var SUPABASE_URL = "https://gawiqfuoexwlnlelcmje.supabase.co";
+var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdhd2lxZnVvZXh3bG5sZWxjbWplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTYxNDksImV4cCI6MjEwMjk5MjE0OX0.W31TqofgMBelyMaz6er6hqe-KlfHYS6OREKqsy8wAe4";
+var SUPABASE_CONFIGURED = SUPABASE_URL.indexOf('REPLACE_ME')===-1;
+
+/* ---------- state ---------- */
+var DEFAULT_STATE = null;
+try{
+  DEFAULT_STATE = JSON.parse(document.getElementById('app-state').textContent);
+}catch(e){
+  DEFAULT_STATE = {meta:{threshold:5,companyName:'RugsCreation',updated:null}, buyers:['Giga','Lutz','Spits','Tanju','Wayfair','fonq'], inventory:[], orders:[], invoices:[]};
+}
+DEFAULT_STATE.invoices = DEFAULT_STATE.invoices || [];
+var STATE = DEFAULT_STATE;
+
+function todayInputValue(){
+  var d = new Date();
+  var mm = String(d.getMonth()+1).padStart(2,'0');
+  var dd = String(d.getDate()).padStart(2,'0');
+  return d.getFullYear()+'-'+mm+'-'+dd;
+}
+
+var AUTH_USER = 'Velaar';
+var AUTH_PASS = '1234';
+function readStoredAuth(){
+  try{ return localStorage.getItem('rc_authed')==='1'; }catch(e){ return false; }
+}
+function writeStoredAuth(val){
+  try{
+    if(val) localStorage.setItem('rc_authed','1');
+    else localStorage.removeItem('rc_authed');
+  }catch(e){ /* private browsing or storage blocked — session-only login still works */ }
+}
+
+var UI = {
+  tab:'inventory',
+  invQuery:'',
+  invSort:'stock-asc',
+  itemQuery:'',
+  draft:{ buyerIdx:0, orderNo:'', orderDate: todayInputValue(), lines:[] },
+  settingsOpen:false,
+  banner:null,
+  lastOrder:null,
+  adjust:null,     /* {sku, value, note} */
+  invoiceDraft:null,  /* {buyer, invoiceNo} */
+  saving:false,
+  histFilter:'all',
+  authed: readStoredAuth(),
+  loginPass:'',
+  loginError:'',
+  dbReady:false,
+  dbLive:false,
+  dbError:''
+};
+
+var supa = null;
+
+function initSupabase(){
+  if(!SUPABASE_CONFIGURED){
+    UI.dbReady = true; UI.dbLive = false;
+    rerender();
+    return;
+  }
+  try{
+    supa = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    loadState();
+    supa.channel('manifest_state_changes')
+      .on('postgres_changes', {event:'*', schema:'public', table:'manifest_state', filter:'id=eq.state'}, function(payload){
+        if(payload.new && payload.new.data){
+          var data = payload.new.data;
+          data.orders = data.orders || [];
+          data.invoices = data.invoices || [];
+          data.buyers = data.buyers || DEFAULT_STATE.buyers;
+          STATE = data;
+          rerender();
+        }
+      })
+      .subscribe();
+  }catch(e){
+    supa = null;
+    UI.dbReady = true; UI.dbLive = false;
+    UI.dbError = e.message;
+    rerender();
+  }
+}
+
+function loadState(){
+  var settled = false;
+  Promise.resolve(supa.from('manifest_state').select('data').eq('id','state').maybeSingle())
+    .then(function(res){
+      settled = true;
+      if(res.error){
+        supa = null;
+        UI.dbReady = true; UI.dbLive = false;
+        UI.dbError = 'database error: ' + res.error.message;
+        rerender();
+        return;
+      }
+      if(res.data && res.data.data){
+        var data = res.data.data;
+        data.orders = data.orders || [];
+        data.invoices = data.invoices || [];
+        data.buyers = data.buyers || DEFAULT_STATE.buyers;
+        STATE = data;
+      } else {
+        Promise.resolve(supa.from('manifest_state').insert({id:'state', data:DEFAULT_STATE})).catch(function(){});
+        STATE = DEFAULT_STATE;
+      }
+      UI.dbReady = true; UI.dbLive = true;
+      rerender();
+    })
+    .catch(function(err){
+      settled = true;
+      supa = null;
+      UI.dbReady = true; UI.dbLive = false;
+      UI.dbError = err.message;
+      rerender();
+    });
+  setTimeout(function(){
+    if(!settled){ supa = null; UI.dbReady = true; UI.dbLive = false; UI.dbError = 'timed out connecting'; rerender(); }
+  }, 8000);
+}
+
+/* ---------- helpers ---------- */
+function esc(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+function fmtEUR(n){
+  if(n==null || isNaN(n)) return '—';
+  return '€' + Number(n).toLocaleString('en-IE', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+function fmtInt(n){ return Number(n||0).toLocaleString('en-IE'); }
+function uid(prefix){ return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function nowISO(){ return new Date().toISOString(); }
+function fmtWhen(iso){
+  if(!iso) return '';
+  var d = new Date(iso);
+  return d.toLocaleString('en-GB', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+}
+function threshold(){ return Number(STATE.meta.threshold)||0; }
+function invBySku(sku){
+  for(var i=0;i<STATE.inventory.length;i++){ if(STATE.inventory[i].sku===sku) return STATE.inventory[i]; }
+  return null;
+}
+function stockClass(stock){
+  if(stock<=0) return 'out';
+  if(stock<=threshold()) return 'low';
+  return '';
+}
+function stockPill(stock){
+  if(stock<=0) return '<span class="pill pill-danger">Out of stock</span>';
+  if(stock<=threshold()) return '<span class="pill pill-warn">Low · '+fmtInt(stock)+' left</span>';
+  return '<span class="pill pill-good">'+fmtInt(stock)+' in stock</span>';
+}
+
+function lowStockItems(){
+  return STATE.inventory.filter(function(it){ return it.stock<=threshold(); })
+    .sort(function(a,b){ return a.stock-b.stock; });
+}
+function stats(){
+  var totalSku = STATE.inventory.length;
+  var totalUnits = STATE.inventory.reduce(function(s,it){return s+it.stock;},0);
+  var low = lowStockItems().length;
+  var today = new Date().toDateString();
+  var ordersToday = STATE.orders.filter(function(o){ return o.type==='order' && new Date(o.ts).toDateString()===today; }).length;
+  return {totalSku:totalSku, totalUnits:totalUnits, low:low, ordersToday:ordersToday};
+}
+
+/* ---------- persistence (Supabase) ---------- */
+function persist(bannerOnFail){
+  STATE.meta.updated = nowISO();
+  if(!supa){
+    UI.banner = {kind:'warn', text: bannerOnFail || 'Not connected to the live database — this change is only on this screen and won’t be saved.'};
+    rerender();
+    return Promise.resolve();
+  }
+  UI.saving = true; rerender();
+  return Promise.resolve(supa.from('manifest_state').update({data: STATE}).eq('id','state')).then(function(res){
+    UI.saving = false;
+    if(res.error){
+      UI.banner = {kind:'warn', text: bannerOnFail || ('Couldn’t save that change: ' + res.error.message)};
+      rerender();
+    }
+    /* the realtime subscription above will re-render every open tab with the confirmed copy */
+  }).catch(function(err){
+    UI.saving = false;
+    UI.banner = {kind:'warn', text: bannerOnFail || ('Couldn’t save that change: ' + err.message)};
+    rerender();
+  });
+}
+
+/* ---------- CSV export ---------- */
+function toCSV(rows){
+  return rows.map(function(r){
+    return r.map(function(v){
+      var s = v==null? '' : String(v);
+      if(/[",\n]/.test(s)) s = '"' + s.replace(/"/g,'""') + '"';
+      return s;
+    }).join(',');
+  }).join('\r\n');
+}
+function exportInventory(){
+  var rows = [['Supplier Item Number','Article Number','EAN','Name','Fibre Composition','Size','Stock','Price EUR']];
+  STATE.inventory.forEach(function(it){
+    rows.push([it.supplier, it.sku, it.ean, it.name, it.fibre, it.size, it.stock, it.price]);
+  });
+  doDownload('rugscreation-stock-' + new Date().toISOString().slice(0,10) + '.csv', toCSV(rows));
+}
+function exportHistory(){
+  var rows = [['Date','Type','Buyer','Order No.','Order Date','SKU','Name','Size','Qty Requested','Qty Fulfilled','Status','Invoiced','Invoice No.','Note']];
+  STATE.orders.forEach(function(o){
+    if(o.type==='adjustment'){
+      rows.push([fmtWhen(o.ts),'Adjustment','', '', '', o.sku, o.name, '', '', o.after, 'adjustment', '', '', (o.before+' → '+o.after+(o.note?' — '+o.note:''))]);
+    } else {
+      o.lines.forEach(function(l){
+        rows.push([fmtWhen(o.ts),'Order', o.buyer, o.orderNo||'', o.orderDate||'', l.sku, l.name, l.size, l.qtyRequested, l.qtyFulfilled, l.status, o.invoiced?'Yes':'No', o.invoiceNo||'', '']);
+      });
+    }
+  });
+  doDownload('rugscreation-order-history-' + new Date().toISOString().slice(0,10) + '.csv', toCSV(rows));
+}
+function exportInvoices(){
+  var rows = [['Channel','Date','Invoice No.','Orders','Amount EUR']];
+  STATE.invoices.forEach(function(iv){
+    rows.push([iv.buyer, fmtWhen(iv.ts), iv.invoiceNo||'', iv.orderCount, iv.amount]);
+  });
+  doDownload('rugscreation-invoices-' + new Date().toISOString().slice(0,10) + '.csv', toCSV(rows));
+}
+function doDownload(filename, data){
+  try{
+    var blob = new Blob([data], {type:'text/csv;charset=utf-8;'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename; a.style.display='none';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 1000);
+    UI.banner = {kind:'good', text:'Downloaded ' + filename + '.'};
+  }catch(e){
+    UI.banner = {kind:'warn', text:'Couldn’t generate the download.'};
+  }
+  rerender();
+}
+
+/* ---------- order logic ---------- */
+function draftBuyerName(){ return STATE.buyers[UI.draft.buyerIdx] || STATE.buyers[0]; }
+
+function addDraftLine(sku){
+  var it = invBySku(sku);
+  if(!it) return;
+  var existing = UI.draft.lines.filter(function(l){return l.sku===sku;})[0];
+  if(existing){ existing.qty += 1; }
+  else { UI.draft.lines.push({sku:sku, qty:1}); }
+  UI.itemQuery='';
+}
+function removeDraftLine(sku){
+  UI.draft.lines = UI.draft.lines.filter(function(l){ return l.sku!==sku; });
+}
+function setDraftQty(sku, qty){
+  qty = Math.max(1, Math.floor(Number(qty)||1));
+  UI.draft.lines.forEach(function(l){ if(l.sku===sku) l.qty=qty; });
+}
+
+function computeAmount(lines){
+  return lines.reduce(function(s,l){ return s + (l.status==='fulfilled' ? l.qtyFulfilled*(l.unitPrice||0) : 0); }, 0);
+}
+
+function processOrder(){
+  if(UI.draft.lines.length===0){
+    UI.banner={kind:'warn', text:'Add at least one item to the order first.'};
+    rerender();
+    return;
+  }
+  var lines = [];
+  var anyFulfilled=false, anyShort=false;
+  UI.draft.lines.forEach(function(dl){
+    var it = invBySku(dl.sku);
+    if(!it) return;
+    var avail = it.stock;
+    var status, qtyFulfilled;
+    if(avail<=0){ status='unavailable'; qtyFulfilled=0; anyShort=true; }
+    else if(dl.qty<=avail){ status='fulfilled'; qtyFulfilled=dl.qty; it.stock -= dl.qty; anyFulfilled=true; }
+    else { status='short'; qtyFulfilled=0; anyShort=true; }
+    lines.push({sku:it.sku, name:it.name, size:it.size, unitPrice:it.price, qtyRequested:dl.qty, qtyFulfilled:qtyFulfilled, availableAtOrder:avail, status:status});
+  });
+  var overall = anyFulfilled && anyShort ? 'partial' : (anyFulfilled ? 'fulfilled' : 'rejected');
+  var orderNo = (UI.draft.orderNo||'').trim();
+  var orderDate = UI.draft.orderDate || todayInputValue();
+  var order = {id:uid('o'), type:'order', ts:nowISO(), orderNo:orderNo, orderDate:orderDate, buyer:draftBuyerName(), lines:lines, status:overall, amount:computeAmount(lines), invoiced:false, invoiceNo:null, invoicedAt:null, email:buildEmail(draftBuyerName(), lines, overall, orderNo)};
+  STATE.orders.unshift(order);
+  UI.lastOrder = order;
+  UI.draft = {buyerIdx:UI.draft.buyerIdx, orderNo:'', orderDate:todayInputValue(), lines:[]};
+  persist().then(function(){ rerender(); });
+  rerender();
+}
+
+function buildEmail(buyer, lines, overall, orderNo){
+  var ok = lines.filter(function(l){return l.status==='fulfilled';});
+  var bad = lines.filter(function(l){return l.status!=='fulfilled';});
+  var subject = 'Order confirmation' + (orderNo? ' – ref '+orderNo : '') + ' – RugsCreation stock – ' + new Date().toLocaleDateString('en-GB');
+  var body = 'Hi ' + buyer + ',\n\n' + (orderNo? 'Thanks for order '+orderNo+'. ' : 'Thanks for your order. ') + 'Here’s where things stand on our Netherlands stock:\n\n';
+  if(ok.length){
+    body += 'CONFIRMED:\n';
+    ok.forEach(function(l){ body += '  • ' + l.sku + ' – ' + l.name + (l.size?' ('+l.size+')':'') + ' × ' + l.qtyFulfilled + '\n'; });
+    body += '\n';
+  }
+  if(bad.length){
+    body += 'COULD NOT FULFIL (insufficient stock):\n';
+    bad.forEach(function(l){
+      body += '  • ' + l.sku + ' – ' + l.name + (l.size?' ('+l.size+')':'') + ' – requested ' + l.qtyRequested + ', ' + (l.availableAtOrder>0? (l.availableAtOrder+' available') : 'none in stock') + '\n';
+    });
+    body += '\nLet us know if you’d like to adjust quantities on the items above, or if you’d like us to hold the rest for the next shipment from India.\n\n';
+  }
+  body += 'Best,\n' + (STATE.meta.companyName||'RugsCreation');
+  return {subject:subject, body:body};
+}
+
+function copyText(text){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){
+      UI.banner={kind:'good', text:'Copied to clipboard.'};
+      rerender();
+    }).catch(function(){ fallbackCopy(text); });
+  } else { fallbackCopy(text); }
+}
+function fallbackCopy(text){
+  try{
+    var ta=document.createElement('textarea');
+    ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    UI.banner={kind:'good', text:'Copied to clipboard.'};
+  }catch(e){
+    UI.banner={kind:'warn', text:'Couldn’t copy automatically — select the text and copy manually.'};
+  }
+  rerender();
+}
+
+/* ---------- stock adjustment ---------- */
+function startAdjust(sku){
+  var it = invBySku(sku);
+  if(!it) return;
+  UI.adjust = {sku:sku, value:String(it.stock), note:''};
+}
+function cancelAdjust(){ UI.adjust=null; }
+function saveAdjust(){
+  if(!UI.adjust) return;
+  var it = invBySku(UI.adjust.sku);
+  if(!it) return;
+  var newVal = Math.max(0, Math.floor(Number(UI.adjust.value)||0));
+  if(newVal===it.stock){ UI.adjust=null; rerender(); return; }
+  var rec = {id:uid('a'), type:'adjustment', ts:nowISO(), sku:it.sku, name:it.name, before:it.stock, after:newVal, note:UI.adjust.note||''};
+  it.stock = newVal;
+  STATE.orders.unshift(rec);
+  UI.adjust=null;
+  persist();
+  rerender();
+}
+
+/* ---------- billing / invoicing ---------- */
+function pendingOrdersFor(buyer){
+  return STATE.orders.filter(function(o){ return o.type==='order' && o.buyer===buyer && !o.invoiced; });
+}
+function channelBalance(buyer){
+  return pendingOrdersFor(buyer).reduce(function(s,o){ return s + (o.amount||0); }, 0);
+}
+function lastInvoiceFor(buyer){
+  var list = STATE.invoices.filter(function(iv){ return iv.buyer===buyer; });
+  if(!list.length) return null;
+  return list.reduce(function(a,b){ return new Date(a.ts) > new Date(b.ts) ? a : b; });
+}
+function startInvoice(buyer){ UI.invoiceDraft = {buyer:buyer, invoiceNo:''}; }
+function cancelInvoice(){ UI.invoiceDraft=null; }
+function confirmInvoice(){
+  if(!UI.invoiceDraft) return;
+  var buyer = UI.invoiceDraft.buyer;
+  var pending = pendingOrdersFor(buyer);
+  if(pending.length===0){
+    UI.banner={kind:'warn', text:'Nothing to invoice for '+buyer+' — no pending orders.'};
+    UI.invoiceDraft=null;
+    rerender();
+    return;
+  }
+  var amount = pending.reduce(function(s,o){return s+(o.amount||0);},0);
+  var ts = nowISO();
+  var invNo = (UI.invoiceDraft.invoiceNo||'').trim();
+  pending.forEach(function(o){ o.invoiced=true; o.invoiceNo = invNo||null; o.invoicedAt = ts; });
+  STATE.invoices.unshift({id:uid('inv'), buyer:buyer, invoiceNo:invNo||null, ts:ts, amount:amount, orderCount:pending.length});
+  UI.invoiceDraft=null;
+  UI.banner={kind:'good', text:'Marked '+pending.length+' order'+(pending.length===1?'':'s')+' for '+buyer+' as invoiced ('+fmtEUR(amount)+'). New billing cycle started.'};
+  persist();
+  rerender();
+}
+
+/* ---------- settings ---------- */
+function saveSettings(){
+  UI.settingsOpen=false;
+  persist();
+  rerender();
+}
+
+/* ================= RENDER ================= */
+function renderLogin(){
+  var html = '<div class="loginwrap"><div class="loginbox">' +
+    '<span class="stamp">RC</span>' +
+    '<h1>'+esc(STATE.meta.companyName||'RugsCreation')+' Manifest</h1>' +
+    '<div class="loginsub">Sign in to view stock and process orders.</div>';
+  if(UI.loginError) html += '<div class="loginerr">'+esc(UI.loginError)+'</div>';
+  html += '<form id="login-form">' +
+    '<div class="field"><label>Username</label><div class="loginuserfixed mono">'+esc(AUTH_USER)+'</div></div>' +
+    '<div class="field"><label for="login-pass">Password</label><input id="login-pass" type="password" autocomplete="current-password" data-bind="loginPass" value="'+esc(UI.loginPass)+'" autofocus></div>' +
+    '<button class="btn btn-accent" type="submit">Sign in</button>' +
+  '</form>' +
+  '</div></div>';
+  document.getElementById('app').innerHTML = html;
+  if(document.activeElement===document.body || !document.activeElement){
+    var pField = document.getElementById('login-pass');
+    if(pField && !UI.loginPass) pField.focus();
+  }
+  var form = document.getElementById('login-form');
+  if(form) form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(UI.loginPass===AUTH_PASS){
+      UI.authed = true; UI.loginError=''; UI.loginPass='';
+      writeStoredAuth(true);
+      render();
+    } else {
+      UI.loginError = 'Incorrect password.';
+      UI.loginPass = '';
+      render();
+    }
+  });
+}
+
+function renderLoading(){
+  document.getElementById('app').innerHTML =
+    '<div class="loginwrap"><div class="loginbox" style="text-align:center;">' +
+    '<span class="stamp" style="margin:0 auto 14px;">RC</span>' +
+    '<h1>Connecting…</h1>' +
+    '<div class="loginsub">Loading live stock from Supabase.</div>' +
+    '</div></div>';
+}
+
+function render(){
+  if(!UI.authed){ renderLogin(); return; }
+  if(!UI.dbReady){ renderLoading(); return; }
+  var html = '';
+  if(!UI.dbLive){
+    var why = !SUPABASE_CONFIGURED ? 'The live database isn’t configured yet (see the setup comment near the top of the file).' : ('Couldn’t reach the live database (' + esc(UI.dbError||'unknown error') + ').');
+    html += '<div class="banner warn"><span>Not connected to the live database — you\'re viewing a local copy and changes won\'t be saved. ' + why + '</span></div>';
+  }
+  html += renderBrandbar();
+  html += renderBanner();
+  html += renderStatstrip();
+  html += renderTabs();
+  html += '<div>';
+  if(UI.tab==='inventory') html += renderInventoryTab();
+  else if(UI.tab==='order') html += renderOrderTab();
+  else if(UI.tab==='history') html += renderHistoryTab();
+  else if(UI.tab==='low') html += renderLowStockTab();
+  else if(UI.tab==='billing') html += renderBillingTab();
+  html += '</div>';
+  html += '<div class="footnote">RugsCreation stock manifest — India → Netherlands. Last saved ' + (STATE.meta.updated? fmtWhen(STATE.meta.updated) : 'never') + '.</div>';
+  if(UI.settingsOpen) html += renderSettings();
+  document.getElementById('app').innerHTML = html;
+}
+
+function renderBrandbar(){
+  return '' +
+  '<div class="brandbar">' +
+    '<div class="brandmark"><span class="stamp">RC</span><h1>'+esc(STATE.meta.companyName||'RugsCreation')+' Manifest</h1><span class="sub">India → Netherlands stock</span></div>' +
+    '<div class="headerbtns">' +
+      (UI.saving? '<span class="btn btn-quiet" aria-live="polite"><span class="savingdot"></span>Saving…</span>' : '') +
+      '<button class="btn" data-action="open-settings" type="button">Settings</button>' +
+      '<button class="btn btn-quiet" data-action="logout" type="button">Log out</button>' +
+    '</div>' +
+  '</div>';
+}
+
+function renderBanner(){
+  if(!UI.banner) return '';
+  var kind = UI.banner.kind||'info';
+  return '<div class="banner '+kind+'"><span>'+esc(UI.banner.text)+'</span><button class="btn btn-quiet btn-sm" data-action="dismiss-banner" type="button">Dismiss</button></div>';
+}
+
+function renderStatstrip(){
+  var s = stats();
+  return '' +
+  '<div class="statstrip">' +
+    '<div class="stat"><div class="n">'+fmtInt(s.totalSku)+'</div><div class="lbl">SKUs tracked</div></div>' +
+    '<div class="stat"><div class="n">'+fmtInt(s.totalUnits)+'</div><div class="lbl">Units in stock</div></div>' +
+    '<div class="stat"><div class="n '+(s.low>0?'alert':'')+'">'+fmtInt(s.low)+'</div><div class="lbl">Low / out of stock</div></div>' +
+    '<div class="stat"><div class="n">'+fmtInt(s.ordersToday)+'</div><div class="lbl">Orders processed today</div></div>' +
+  '</div>';
+}
+
+function renderTabs(){
+  var s = stats();
+  var channelsOwing = STATE.buyers.filter(function(b){ return channelBalance(b)>0; }).length;
+  var tabs = [
+    ['inventory','Inventory'],
+    ['order','New order'],
+    ['history','History'],
+    ['low','Low stock'],
+    ['billing','Billing']
+  ];
+  var html = '<div class="tabs" role="tablist">';
+  tabs.forEach(function(t){
+    var badge = '';
+    if(t[0]==='low' && s.low>0) badge = ' <span class="badge">'+s.low+'</span>';
+    else if(t[0]==='billing' && channelsOwing>0) badge = ' <span class="badge warn">'+channelsOwing+'</span>';
+    html += '<button class="tab '+(UI.tab===t[0]?'active':'')+'" role="tab" data-action="set-tab" data-tab="'+t[0]+'" type="button">'+t[1]+badge+'</button>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function sortedInventory(){
+  var list = STATE.inventory.slice();
+  var q = UI.invQuery.trim().toLowerCase();
+  if(q){
+    list = list.filter(function(it){
+      return (it.sku||'').toLowerCase().indexOf(q)>=0 ||
+             (it.ean||'').toLowerCase().indexOf(q)>=0 ||
+             (it.name||'').toLowerCase().indexOf(q)>=0 ||
+             (it.size||'').toLowerCase().indexOf(q)>=0;
+    });
+  }
+  var sortMap = {
+    'stock-asc': function(a,b){return a.stock-b.stock;},
+    'stock-desc': function(a,b){return b.stock-a.stock;},
+    'name-asc': function(a,b){return a.name.localeCompare(b.name);},
+    'sku-asc': function(a,b){return a.sku.localeCompare(b.sku);}
+  };
+  list.sort(sortMap[UI.invSort] || sortMap['stock-asc']);
+  return list;
+}
+
+function renderInventoryTab(){
+  var list = sortedInventory();
+  var html = '<div class="panel-head"><h2>Inventory</h2><span class="hint">'+fmtInt(list.length)+' of '+fmtInt(STATE.inventory.length)+' items shown</span></div>';
+  html += '<div class="toolbar">' +
+    '<input type="search" placeholder="Search article number, EAN, name or size…" data-bind="invQuery" value="'+esc(UI.invQuery)+'">' +
+    '<select data-bind="invSort">' +
+      '<option value="stock-asc"'+(UI.invSort==='stock-asc'?' selected':'')+'>Stock: low to high</option>' +
+      '<option value="stock-desc"'+(UI.invSort==='stock-desc'?' selected':'')+'>Stock: high to low</option>' +
+      '<option value="name-asc"'+(UI.invSort==='name-asc'?' selected':'')+'>Name: A–Z</option>' +
+      '<option value="sku-asc"'+(UI.invSort==='sku-asc'?' selected':'')+'>Article number</option>' +
+    '</select>' +
+    '<button class="btn" data-action="export-inventory" type="button">Export CSV</button>' +
+  '</div>';
+  html += '<div class="tablewrap"><table><thead><tr>' +
+    '<th>Article No.</th><th>EAN</th><th>Name</th><th>Size</th><th>Fibre</th><th class="num">Stock</th><th class="num">Price</th><th></th>' +
+    '</tr></thead><tbody>';
+  if(list.length===0){
+    html += '<tr><td colspan="8" class="faint" style="padding:24px; text-align:center;">No items match that search.</td></tr>';
+  }
+  list.forEach(function(it){
+    html += '<tr class="'+stockClass(it.stock)+'">' +
+      '<td class="mono">'+esc(it.sku)+'</td>' +
+      '<td class="mono faint">'+esc(it.ean)+'</td>' +
+      '<td>'+esc(it.name)+'</td>' +
+      '<td class="mono">'+esc(it.size)+'</td>' +
+      '<td class="faint">'+esc(it.fibre)+'</td>' +
+      '<td class="num">'+ (UI.adjust && UI.adjust.sku===it.sku ? renderAdjustInline() : fmtInt(it.stock)) +'</td>' +
+      '<td class="num">'+fmtEUR(it.price)+'</td>' +
+      '<td>'+ (UI.adjust && UI.adjust.sku===it.sku ? '' : '<button class="btn btn-quiet btn-sm" data-action="start-adjust" data-sku="'+esc(it.sku)+'" type="button">Adjust</button>') +'</td>' +
+    '</tr>';
+  });
+  html += '</tbody></table></div>';
+  return html;
+}
+
+function renderAdjustInline(){
+  var a = UI.adjust;
+  return '<span style="display:inline-flex; gap:6px; align-items:center;">' +
+    '<input class="qtybox mono" type="number" min="0" data-bind="adjustValue" value="'+esc(a.value)+'">' +
+    '<button class="btn btn-sm btn-accent" data-action="save-adjust" type="button">Save</button>' +
+    '<button class="btn btn-sm btn-quiet" data-action="cancel-adjust" type="button">✕</button>' +
+  '</span>';
+}
+
+function orderSuggestions(){
+  var q = UI.itemQuery.trim().toLowerCase();
+  if(!q) return [];
+  return STATE.inventory.filter(function(it){
+    return (it.sku||'').toLowerCase().indexOf(q)>=0 ||
+           (it.ean||'').toLowerCase().indexOf(q)>=0 ||
+           (it.name||'').toLowerCase().indexOf(q)>=0;
+  }).slice(0,8);
+}
+
+function renderOrderTab(){
+  var html = '<div class="panel-head"><h2>New order</h2><span class="hint">Check an incoming order (email or PDF) against stock, then approve to deduct it.</span></div>';
+  html += '<div class="order-grid">';
+
+  /* left: picker */
+  html += '<div class="card">';
+  html += '<div class="field"><label for="buyer-select">Channel / buyer</label><select id="buyer-select" data-bind="buyerIdx">';
+  STATE.buyers.forEach(function(b,i){ html += '<option value="'+i+'"'+(UI.draft.buyerIdx==i?' selected':'')+'>'+esc(b)+'</option>'; });
+  html += '</select></div>';
+  html += '<div style="display:flex; gap:12px;">' +
+    '<div class="field" style="flex:1;"><label for="draft-orderno">Order no. (optional)</label><input id="draft-orderno" type="text" placeholder="e.g. ORDER169243" data-bind="draftOrderNo" value="'+esc(UI.draft.orderNo)+'"></div>' +
+    '<div class="field" style="flex:1;"><label for="draft-orderdate">Order date</label><input id="draft-orderdate" type="date" data-bind="draftOrderDate" value="'+esc(UI.draft.orderDate)+'"></div>' +
+  '</div>';
+  html += '<div class="field"><label for="item-query">Add item (article no., EAN or name)</label>' +
+    '<input id="item-query" type="text" placeholder="e.g. VLR2090074 or Shelly Zickzack" data-bind="itemQuery" value="'+esc(UI.itemQuery)+'" autocomplete="off">';
+  var sugg = orderSuggestions();
+  if(sugg.length){
+    html += '<div class="suggest">';
+    sugg.forEach(function(it){
+      html += '<button type="button" data-action="add-item" data-sku="'+esc(it.sku)+'">' +
+        '<div class="sname">'+esc(it.name)+' <span class="faint mono">'+esc(it.size)+'</span></div>' +
+        '<div class="smeta mono">'+esc(it.sku)+' · '+ (it.stock<=0? 'out of stock' : it.stock+' in stock') +'</div>' +
+      '</button>';
+    });
+    html += '</div>';
+  } else if(UI.itemQuery.trim()){
+    html += '<div class="faint" style="padding-top:6px;">No matching items.</div>';
+  }
+  html += '</div>';
+  html += '<div class="faint">Tip: search by part of the article number, EAN, or product name — exactly what’s usually in the order email.</div>';
+  html += '</div>';
+
+  /* right: ticket */
+  html += '<div class="ticket">';
+  var ticketSub = esc(draftBuyerName()) + (UI.draft.orderNo? ' · '+esc(UI.draft.orderNo) : '') + ' · ' + esc(UI.draft.orderDate||todayInputValue());
+  html += '<h3>Order ticket</h3><div class="ticket-sub">'+ticketSub+'</div>';
+  var ticketValue = UI.draft.lines.reduce(function(s,dl){ var it=invBySku(dl.sku); return s + (it? dl.qty*(it.price||0) : 0); }, 0);
+  if(UI.draft.lines.length===0){
+    html += '<div class="ticket-empty">No items added yet.</div>';
+  } else {
+    UI.draft.lines.forEach(function(dl){
+      var it = invBySku(dl.sku);
+      if(!it) return;
+      var status = it.stock<=0 ? '<span class="pill pill-danger">Out of stock</span>' : (dl.qty<=it.stock ? '<span class="pill pill-good">In stock</span>' : '<span class="pill pill-warn">Only '+it.stock+' available</span>');
+      html += '<div class="lineitem">' +
+        '<div><div class="li-name">'+esc(it.name)+'</div><div class="li-meta">'+esc(it.sku)+' · '+esc(it.size)+'</div><div style="margin-top:4px;">'+status+'</div></div>' +
+        '<div class="li-right">' +
+          '<input class="qtybox mono" type="number" min="1" data-bind="draftQty" data-sku="'+esc(it.sku)+'" value="'+dl.qty+'">' +
+          '<button class="iconbtn" data-action="remove-item" data-sku="'+esc(it.sku)+'" type="button" title="Remove" aria-label="Remove">✕</button>' +
+        '</div>' +
+      '</div>';
+    });
+  }
+  if(UI.draft.lines.length>0){
+    html += '<div class="faint" style="text-align:right; margin-top:8px;">Requested value: '+fmtEUR(ticketValue)+'</div>';
+  }
+  html += '<div class="ticket-actions">' +
+    '<button class="btn btn-accent" data-action="approve-order" type="button" '+(UI.draft.lines.length===0?'disabled':'')+'>Approve &amp; deduct stock</button>' +
+  '</div>';
+  html += '</div>';
+  html += '</div>'; /* order-grid */
+
+  if(UI.lastOrder){
+    html += renderConfirmedOrder(UI.lastOrder);
+  }
+  return html;
+}
+
+function renderConfirmedOrder(order){
+  var pillClass = order.status==='fulfilled' ? 'pill-good' : (order.status==='partial' ? 'pill-warn' : 'pill-danger');
+  var pillText = order.status==='fulfilled' ? 'Fully approved' : (order.status==='partial' ? 'Partially approved' : 'Not fulfilled');
+  var html = '<div class="card" style="margin-top:20px;">';
+  html += '<div class="panel-head"><h2 style="font-size:1.15rem;">Last processed order — '+esc(order.buyer)+(order.orderNo?' · '+esc(order.orderNo):'')+'</h2><span class="pill '+pillClass+'">'+pillText+'</span></div>';
+  html += '<div class="faint" style="margin-bottom:10px;">Order value: <strong class="mono">'+fmtEUR(order.amount)+'</strong> · <span class="pill pill-quiet">Not yet invoiced</span></div>';
+  html += '<div class="emailbox">';
+  html += '<div class="field"><label>Reply email — copy into your mail client</label>' +
+    '<textarea readonly id="lastorder-email">Subject: '+esc(order.email.subject)+'\n\n'+esc(order.email.body)+'</textarea></div>';
+  html += '<button class="btn" data-action="copy-email" type="button">Copy email text</button>';
+  html += '</div></div>';
+  return html;
+}
+
+function renderHistoryTab(){
+  var html = '<div class="panel-head"><h2>History</h2><span class="hint">'+fmtInt(STATE.orders.length)+' entries logged</span></div>';
+  html += '<div class="toolbar">' +
+    '<select data-bind="histFilter">' +
+      '<option value="all"'+(UI.histFilter==='all'?' selected':'')+'>All buyers &amp; adjustments</option>';
+  STATE.buyers.forEach(function(b){ html += '<option value="'+esc(b)+'"'+(UI.histFilter===b?' selected':'')+'>'+esc(b)+'</option>'; });
+  html += '<option value="adjustment"'+(UI.histFilter==='adjustment'?' selected':'')+'>Stock adjustments only</option>' +
+    '</select>' +
+    '<button class="btn" data-action="export-history" type="button">Export CSV</button>' +
+  '</div>';
+
+  var entries = STATE.orders.filter(function(o){
+    if(UI.histFilter==='all') return true;
+    if(UI.histFilter==='adjustment') return o.type==='adjustment';
+    return o.type==='order' && o.buyer===UI.histFilter;
+  });
+
+  if(entries.length===0){
+    html += '<div class="card"><div class="faint" style="text-align:center; padding:20px;">Nothing here yet — process an order or adjust stock to see it logged.</div></div>';
+    return html;
+  }
+
+  entries.forEach(function(o){
+    if(o.type==='adjustment'){
+      html += '<div class="histcard"><summary style="cursor:default;"><div class="hleft">' +
+        '<span class="pill pill-quiet">Adjustment</span>' +
+        '<span class="hbuyer" style="font-size:.95rem;">'+esc(o.name)+'</span>' +
+        '<span class="faint mono">'+esc(o.sku)+'</span>' +
+      '</div><div class="htime">'+fmtWhen(o.ts)+'</div></summary>' +
+      '<div class="hbody" style="padding-top:10px;">Stock changed from <strong class="mono">'+fmtInt(o.before)+'</strong> to <strong class="mono">'+fmtInt(o.after)+'</strong>'+(o.note?' — '+esc(o.note):'')+'</div></div>';
+      return;
+    }
+    var pillClass = o.status==='fulfilled' ? 'pill-good' : (o.status==='partial' ? 'pill-warn' : 'pill-danger');
+    var pillText = o.status==='fulfilled' ? 'Fully approved' : (o.status==='partial' ? 'Partially approved' : 'Not fulfilled');
+    var invPill = o.invoiced ? '<span class="pill pill-good">Invoiced'+(o.invoiceNo?' · '+esc(o.invoiceNo):'')+'</span>' : '<span class="pill pill-quiet">Pending invoice</span>';
+    html += '<details class="histcard"><summary><div class="hleft">' +
+      '<span class="hbuyer">'+esc(o.buyer)+'</span>' +
+      (o.orderNo? '<span class="faint mono">'+esc(o.orderNo)+'</span>' : '') +
+      '<span class="pill '+pillClass+'">'+pillText+'</span>' +
+      invPill +
+      '<span class="faint">'+o.lines.length+' item'+(o.lines.length===1?'':'s')+' · '+fmtEUR(o.amount)+'</span>' +
+    '</div><div class="htime">'+fmtWhen(o.ts)+(o.orderDate? ' · ordered '+esc(o.orderDate) : '')+'</div></summary>';
+    html += '<div class="hbody"><table><thead><tr><th>Article No.</th><th>Name</th><th>Size</th><th class="num">Requested</th><th class="num">Fulfilled</th><th>Status</th></tr></thead><tbody>';
+    o.lines.forEach(function(l){
+      var lp = l.status==='fulfilled' ? 'pill-good' : (l.status==='short' ? 'pill-warn' : 'pill-danger');
+      var lt = l.status==='fulfilled' ? 'Fulfilled' : (l.status==='short' ? 'Insufficient stock' : 'Unavailable');
+      html += '<tr><td class="mono">'+esc(l.sku)+'</td><td>'+esc(l.name)+'</td><td class="mono">'+esc(l.size)+'</td><td class="num">'+fmtInt(l.qtyRequested)+'</td><td class="num">'+fmtInt(l.qtyFulfilled)+'</td><td><span class="pill '+lp+'">'+lt+'</span></td></tr>';
+    });
+    html += '</tbody></table>';
+    html += '<div class="emailbox"><div class="field"><label>Reply email</label><textarea readonly data-order-id="'+o.id+'">Subject: '+esc(o.email.subject)+'\n\n'+esc(o.email.body)+'</textarea></div>' +
+      '<button class="btn btn-sm" data-action="copy-hist-email" data-order-id="'+o.id+'" type="button">Copy email text</button></div>';
+    html += '</div></details>';
+  });
+  return html;
+}
+
+function renderLowStockTab(){
+  var list = lowStockItems();
+  var html = '<div class="panel-head"><h2>Low stock</h2><span class="hint">Items at or below your reorder threshold.</span></div>';
+  html += '<div class="toolbar">' +
+    '<div class="field" style="margin:0;"><label for="threshold-input">Reorder threshold (units)</label>' +
+    '<input id="threshold-input" class="mono" style="width:100px;" type="number" min="0" data-bind="threshold" value="'+esc(threshold())+'"></div>' +
+    '<button class="btn" data-action="save-threshold" type="button">Save threshold</button>' +
+    '<span style="flex:1;"></span>' +
+    '<button class="btn" data-action="export-inventory" type="button">Export CSV</button>' +
+  '</div>';
+  html += '<div class="tablewrap"><table><thead><tr><th>Article No.</th><th>Name</th><th>Size</th><th class="num">Stock</th><th></th></tr></thead><tbody>';
+  if(list.length===0){
+    html += '<tr><td colspan="5" class="faint" style="padding:24px; text-align:center;">Nothing below your threshold right now — stock looks healthy.</td></tr>';
+  }
+  list.forEach(function(it){
+    html += '<tr class="'+stockClass(it.stock)+'">' +
+      '<td class="mono">'+esc(it.sku)+'</td><td>'+esc(it.name)+'</td><td class="mono">'+esc(it.size)+'</td>' +
+      '<td class="num">'+stockPill(it.stock)+'</td>' +
+      '<td><button class="btn btn-quiet btn-sm" data-action="goto-order" data-sku="'+esc(it.sku)+'" type="button">Order it</button></td>' +
+    '</tr>';
+  });
+  html += '</tbody></table></div>';
+  return html;
+}
+
+function renderBillingTab(){
+  var totalOutstanding = STATE.buyers.reduce(function(s,b){return s+channelBalance(b);},0);
+  var owingCount = STATE.buyers.filter(function(b){return channelBalance(b)>0;}).length;
+  var html = '<div class="panel-head"><h2>Billing</h2><span class="hint">What each channel owes since their last invoice.</span></div>';
+  html += '<div class="statstrip" style="grid-template-columns:repeat(3,1fr); margin-bottom:20px;">' +
+    '<div class="stat"><div class="n">'+fmtEUR(totalOutstanding)+'</div><div class="lbl">Total outstanding</div></div>' +
+    '<div class="stat"><div class="n '+(owingCount>0?'alert':'')+'">'+fmtInt(owingCount)+'</div><div class="lbl">Channels with a balance</div></div>' +
+    '<div class="stat"><div class="n">'+fmtInt(STATE.invoices.length)+'</div><div class="lbl">Invoices raised</div></div>' +
+  '</div>';
+  html += '<div class="tablewrap"><table><thead><tr><th>Channel</th><th class="num">Pending orders</th><th class="num">Outstanding</th><th>Last invoice</th><th></th></tr></thead><tbody>';
+  STATE.buyers.forEach(function(b){
+    var pend = pendingOrdersFor(b);
+    var bal = pend.reduce(function(s,o){return s+(o.amount||0);},0);
+    var last = lastInvoiceFor(b);
+    if(UI.invoiceDraft && UI.invoiceDraft.buyer===b){
+      html += '<tr class="'+(bal>0?'low':'')+'"><td>'+esc(b)+'</td><td class="num">'+fmtInt(pend.length)+'</td><td class="num">'+fmtEUR(bal)+'</td><td colspan="2">' +
+        '<span style="display:inline-flex; gap:6px; align-items:center; flex-wrap:wrap;">' +
+        '<input type="text" placeholder="Invoice no. (optional)" data-bind="invoiceNo" value="'+esc(UI.invoiceDraft.invoiceNo)+'" style="width:170px;">' +
+        '<button class="btn btn-sm btn-accent" data-action="confirm-invoice" type="button">Confirm — starts new cycle</button>' +
+        '<button class="btn btn-sm btn-quiet" data-action="cancel-invoice" type="button">Cancel</button>' +
+        '</span></td></tr>';
+    } else {
+      html += '<tr class="'+(bal>0?'low':'')+'"><td>'+esc(b)+'</td><td class="num">'+fmtInt(pend.length)+'</td><td class="num">'+fmtEUR(bal)+'</td>' +
+        '<td class="faint">'+(last? (fmtWhen(last.ts) + (last.invoiceNo? ' · '+esc(last.invoiceNo):'')) : 'None yet')+'</td>' +
+        '<td><button class="btn btn-quiet btn-sm" data-action="start-invoice" data-buyer="'+esc(b)+'" type="button" '+(pend.length===0?'disabled':'')+'>Mark invoice created</button></td></tr>';
+    }
+  });
+  html += '</tbody></table></div>';
+
+  if(STATE.invoices.length){
+    html += '<div class="panel-head" style="margin-top:24px;"><h2 style="font-size:1.1rem;">Invoice history</h2><button class="btn btn-sm" data-action="export-invoices" type="button">Export CSV</button></div>';
+    html += '<div class="tablewrap"><table><thead><tr><th>Channel</th><th>Date</th><th>Invoice No.</th><th class="num">Orders</th><th class="num">Amount</th></tr></thead><tbody>';
+    STATE.invoices.forEach(function(iv){
+      html += '<tr><td>'+esc(iv.buyer)+'</td><td class="mono">'+fmtWhen(iv.ts)+'</td><td class="mono">'+esc(iv.invoiceNo||'—')+'</td><td class="num">'+fmtInt(iv.orderCount)+'</td><td class="num">'+fmtEUR(iv.amount)+'</td></tr>';
+    });
+    html += '</tbody></table></div>';
+  }
+  return html;
+}
+
+function renderSettings(){
+  var html = '<div class="settingswrap" data-action="settings-overlay">' +
+    '<div class="settingsbox" onclick="event.stopPropagation()">' +
+    '<div class="settings-close"><button class="btn btn-quiet btn-sm" data-action="close-settings" type="button">Close ✕</button></div>' +
+    '<h2>Settings</h2>' +
+    '<div class="field"><label for="company-name">Business name</label><input id="company-name" type="text" data-bind="companyName" value="'+esc(STATE.meta.companyName)+'"></div>';
+  STATE.buyers.forEach(function(b,i){
+    html += '<div class="field"><label for="buyer-'+i+'">Buyer '+(i+1)+' name</label><input id="buyer-'+i+'" type="text" data-bind="buyerName" data-idx="'+i+'" value="'+esc(b)+'"></div>';
+  });
+  html += '<div class="field"><label for="settings-threshold">Low stock threshold</label><input id="settings-threshold" class="mono" type="number" min="0" data-bind="threshold" value="'+esc(threshold())+'"></div>';
+  html += '<button class="btn btn-accent" data-action="save-settings" type="button" style="width:100%;">Save settings</button>';
+  html += '</div></div>';
+  return html;
+}
+
+/* ---------- focus-preserving rerender ---------- */
+function rerender(){
+  var active = document.activeElement;
+  var savedId = null, selStart=null, selEnd=null;
+  if(active && active.id && document.getElementById('app').contains(active)){
+    savedId = active.id;
+    if('selectionStart' in active){ try{ selStart=active.selectionStart; selEnd=active.selectionEnd; }catch(e){} }
+  }
+  var savedSku = null;
+  if(active && active.dataset && active.dataset.sku && document.getElementById('app').contains(active)){
+    savedSku = active.dataset.sku;
+  }
+  render();
+  if(savedId){
+    var el = document.getElementById(savedId);
+    if(el){
+      el.focus();
+      if(selStart!=null && 'setSelectionRange' in el){ try{ el.setSelectionRange(selStart, selEnd); }catch(e){} }
+    }
+  } else if(savedSku){
+    var el2 = document.querySelector('[data-sku="'+CSS.escape(savedSku)+'"] input, input[data-sku="'+CSS.escape(savedSku)+'"]');
+    if(el2) el2.focus();
+  }
+}
+
+/* ---------- events ---------- */
+var app = document.getElementById('app');
+
+app.addEventListener('click', function(e){
+  var btn = e.target.closest('[data-action]');
+  if(!btn) return;
+  var action = btn.dataset.action;
+  if(action==='set-tab'){ UI.tab = btn.dataset.tab; UI.lastOrder=null; rerender(); }
+  else if(action==='open-settings'){ UI.settingsOpen=true; rerender(); }
+  else if(action==='close-settings' || action==='settings-overlay'){ if(e.target===btn){ UI.settingsOpen=false; rerender(); } }
+  else if(action==='dismiss-banner'){ UI.banner=null; rerender(); }
+  else if(action==='add-item'){ addDraftLine(btn.dataset.sku); rerender(); }
+  else if(action==='remove-item'){ removeDraftLine(btn.dataset.sku); rerender(); }
+  else if(action==='approve-order'){ processOrder(); }
+  else if(action==='copy-email'){ var ta=document.getElementById('lastorder-email'); if(ta) copyText(ta.value); }
+  else if(action==='copy-hist-email'){ var ta2=document.querySelector('textarea[data-order-id="'+btn.dataset.orderId+'"]'); if(ta2) copyText(ta2.value); }
+  else if(action==='export-inventory'){ exportInventory(); }
+  else if(action==='export-history'){ exportHistory(); }
+  else if(action==='start-adjust'){ startAdjust(btn.dataset.sku); rerender(); }
+  else if(action==='cancel-adjust'){ cancelAdjust(); rerender(); }
+  else if(action==='save-adjust'){ saveAdjust(); }
+  else if(action==='save-settings'){ saveSettings(); }
+  else if(action==='save-threshold'){ persist(); rerender(); }
+  else if(action==='goto-order'){ UI.tab='order'; var it=invBySku(btn.dataset.sku); if(it){ UI.itemQuery=''; addDraftLine(it.sku); } rerender(); }
+  else if(action==='start-invoice'){ startInvoice(btn.dataset.buyer); rerender(); }
+  else if(action==='cancel-invoice'){ cancelInvoice(); rerender(); }
+  else if(action==='confirm-invoice'){ confirmInvoice(); }
+  else if(action==='export-invoices'){ exportInvoices(); }
+  else if(action==='logout'){ UI.authed=false; writeStoredAuth(false); UI.settingsOpen=false; rerender(); }
+});
+
+app.addEventListener('input', function(e){
+  var t = e.target;
+  var bind = t.dataset.bind;
+  if(!bind) return;
+  if(bind==='invQuery'){ UI.invQuery = t.value; rerender(); }
+  else if(bind==='itemQuery'){ UI.itemQuery = t.value; rerender(); }
+  else if(bind==='draftQty'){ setDraftQty(t.dataset.sku, t.value); rerender(); }
+  else if(bind==='adjustValue'){ if(UI.adjust) UI.adjust.value = t.value; }
+  else if(bind==='threshold'){ STATE.meta.threshold = Math.max(0, Math.floor(Number(t.value)||0)); }
+  else if(bind==='companyName'){ STATE.meta.companyName = t.value; }
+  else if(bind==='buyerName'){ STATE.buyers[Number(t.dataset.idx)] = t.value; }
+  else if(bind==='draftOrderNo'){ UI.draft.orderNo = t.value; rerender(); }
+  else if(bind==='draftOrderDate'){ UI.draft.orderDate = t.value; rerender(); }
+  else if(bind==='invoiceNo'){ if(UI.invoiceDraft) UI.invoiceDraft.invoiceNo = t.value; }
+  else if(bind==='loginPass'){ UI.loginPass = t.value; }
+});
+
+app.addEventListener('change', function(e){
+  var t = e.target;
+  var bind = t.dataset.bind;
+  if(!bind) return;
+  if(bind==='invSort'){ UI.invSort = t.value; rerender(); }
+  else if(bind==='buyerIdx'){ UI.draft.buyerIdx = Number(t.value); rerender(); }
+  else if(bind==='histFilter'){ UI.histFilter = t.value; rerender(); }
+});
+
+/* ---------- boot ---------- */
+render();
+initSupabase();
+
+})();
+</script>
+</body>
