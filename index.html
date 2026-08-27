@@ -351,6 +351,7 @@ var UI = {
   saving:false,
   histFilter:'all',
   editDraft:null,   /* {sku,name,ean,fibre,size,price,stock,imagePreview,imageChanged,removeImage,loadingImage} */
+  addDraft:null,    /* {sku,ean,supplier,name,fibre,size,price,stock,imagePreview,imageChanged,error} */
   bulkImport:null,  /* {running:false, matched:[], unmatched:[], total:0, done:0} */
   invoiceView:null, /* invoice id currently being viewed/printed */
   authed: readStoredAuth(),
@@ -809,6 +810,67 @@ function saveEdit(){
   rerender();
 }
 
+/* ---------- add new SKU ---------- */
+function startAdd(){
+  UI.addDraft = {
+    sku:'', ean:'', supplier:'', name:'', fibre:'', size:'', price:'', stock:'0',
+    imagePreview:null, imageChanged:false, error:''
+  };
+  rerender();
+}
+function closeAdd(){ UI.addDraft=null; rerender(); }
+function addPickImage(file){
+  if(!UI.addDraft) return;
+  var draft = UI.addDraft;
+  compressImageFile(file).then(function(dataUrl){
+    if(UI.addDraft!==draft) return;
+    UI.addDraft.imagePreview = dataUrl;
+    UI.addDraft.imageChanged = true;
+    UI.addDraft.error = '';
+    rerender();
+  }).catch(function(err){
+    if(UI.addDraft!==draft) return;
+    UI.addDraft.error = err.message || 'Could not process that image.';
+    rerender();
+  });
+}
+function addRemoveImage(){
+  if(!UI.addDraft) return;
+  UI.addDraft.imagePreview = null;
+  UI.addDraft.imageChanged = true;
+  rerender();
+}
+function saveAdd(){
+  var d = UI.addDraft;
+  if(!d) return;
+  var sku = d.sku.trim().toUpperCase();
+  if(!sku){ d.error = 'Article number (SKU) is required.'; rerender(); return; }
+  if(invBySku(sku)){ d.error = 'That article number already exists.'; rerender(); return; }
+  var it = {
+    id: uid('a'),
+    supplier: d.supplier.trim(),
+    sku: sku,
+    ean: d.ean.trim(),
+    name: d.name.trim(),
+    fibre: d.fibre.trim(),
+    size: d.size.trim(),
+    stock: Math.max(0, Math.floor(Number(d.stock)||0)),
+    price: Math.max(0, Number(d.price)||0),
+    img: false
+  };
+  STATE.inventory.push(it);
+  STATE.orders.unshift({id:uid('a'), type:'adjustment', ts:nowISO(), sku:it.sku, name:it.name, before:0, after:it.stock, note:'Added to Master Database'});
+  var imgWork = Promise.resolve();
+  if(d.imageChanged && d.imagePreview){
+    it.img = true;
+    imgWork = saveProductImage(it.sku, d.imagePreview);
+  }
+  UI.addDraft = null;
+  imgWork.catch(function(){ /* image save failure shouldn't block the rest of the record saving */ });
+  persist();
+  rerender();
+}
+
 /* ---------- bulk photo import (match filename → article no.) ---------- */
 function normalizeMatchKey(s){
   return String(s||'').toUpperCase().replace(/\.[A-Z0-9]+$/,'').replace(/[^A-Z0-9]/g,'');
@@ -971,6 +1033,7 @@ function render(){
   html += '<div class="footnote">RugsCreation stock manifest — India → Netherlands. Last saved ' + (STATE.meta.updated? fmtWhen(STATE.meta.updated) : 'never') + '.</div>';
   if(UI.settingsOpen) html += renderSettings();
   if(UI.editDraft) html += renderEditModal();
+  if(UI.addDraft) html += renderAddModal();
   if(UI.bulkImport) html += renderBulkImportModal();
   if(UI.invoiceView) html += renderInvoiceModal();
   document.getElementById('app').innerHTML = html;
@@ -1176,6 +1239,7 @@ function renderInventoryTab(){
       '<option value="sku-asc"'+(UI.invSort==='sku-asc'?' selected':'')+'>Article number</option>' +
     '</select>' +
     '<span style="flex:1;"></span>' +
+    '<button class="btn btn-accent" data-action="start-add" type="button">+ Add SKU</button>' +
     '<button class="btn" data-action="import-photos" type="button">Import photos…</button>' +
     '<input type="file" id="bulk-photo-input" accept="image/*" multiple style="display:none;">' +
     '<button class="btn" data-action="export-inventory" type="button">Export CSV</button>' +
@@ -1529,6 +1593,46 @@ function renderEditModal(){
   return html;
 }
 
+function renderAddModal(){
+  var d = UI.addDraft;
+  var html = '<div class="settingswrap" data-action="add-overlay">' +
+    '<div class="settingsbox wide">' +
+    '<div class="settings-close"><button class="btn btn-quiet btn-sm" data-action="close-add" type="button">Close ✕</button></div>' +
+    '<h2>Add new SKU</h2>';
+
+  html += '<div class="editimgrow">';
+  if(d.imagePreview){
+    html += '<img class="editimgpreview" src="'+d.imagePreview+'" alt="">';
+  } else {
+    html += '<span class="editimgpreview-empty">🖼</span>';
+  }
+  html += '<div class="editimgbtns">' +
+    '<button class="btn btn-sm" data-action="add-pick-image" type="button">'+(d.imagePreview?'Replace photo':'Upload photo')+'</button>' +
+    (d.imagePreview? '<button class="btn btn-sm btn-quiet" data-action="add-remove-image" type="button">Remove photo</button>' : '') +
+    '<input type="file" id="add-image-input" accept="image/*" style="display:none;">' +
+    '<span class="faint" style="font-size:.76rem;">Optional — any size or resolution, it\'s auto-compressed for storage.</span>' +
+  '</div></div>';
+  if(d.error) html += '<div class="loginerr" style="margin-bottom:14px;">'+esc(d.error)+'</div>';
+
+  html += '<div class="editgrid">' +
+    '<div class="field"><label for="add-sku">Article number (SKU)</label><input id="add-sku" class="mono" type="text" data-bind="addSku" value="'+esc(d.sku)+'"></div>' +
+    '<div class="field"><label for="add-ean">EAN</label><input id="add-ean" class="mono" type="text" data-bind="addEan" value="'+esc(d.ean)+'"></div>' +
+    '<div class="field"><label for="add-supplier">Supplier item no.</label><input id="add-supplier" class="mono" type="text" data-bind="addSupplier" value="'+esc(d.supplier)+'"></div>' +
+    '<div class="field"><label for="add-size">Size</label><input id="add-size" type="text" data-bind="addSize" value="'+esc(d.size)+'"></div>' +
+    '<div class="field full"><label for="add-name">Name</label><input id="add-name" type="text" data-bind="addName" value="'+esc(d.name)+'"></div>' +
+    '<div class="field full"><label for="add-fibre">Fibre</label><input id="add-fibre" type="text" data-bind="addFibre" value="'+esc(d.fibre)+'"></div>' +
+    '<div class="field"><label for="add-price">Price (EUR)</label><input id="add-price" class="mono" type="number" min="0" step="0.01" data-bind="addPrice" value="'+esc(d.price)+'"></div>' +
+    '<div class="field"><label for="add-stock">Stock</label><input id="add-stock" class="mono" type="number" min="0" data-bind="addStock" value="'+esc(d.stock)+'"></div>' +
+  '</div>';
+
+  html += '<div style="display:flex; gap:8px; margin-top:20px;">' +
+    '<button class="btn btn-accent" data-action="save-add" type="button" style="flex:1;">Add SKU</button>' +
+    '<button class="btn btn-quiet" data-action="close-add" type="button">Cancel</button>' +
+  '</div>';
+  html += '</div></div>';
+  return html;
+}
+
 function renderBulkImportModal(){
   var b = UI.bulkImport;
   var html = '<div class="settingswrap" data-action="bulkimport-overlay">' +
@@ -1608,6 +1712,11 @@ app.addEventListener('click', function(e){
   else if(action==='save-edit'){ saveEdit(); }
   else if(action==='edit-pick-image'){ var fi=document.getElementById('edit-image-input'); if(fi) fi.click(); }
   else if(action==='edit-remove-image'){ editRemoveImage(); }
+  else if(action==='start-add'){ startAdd(); }
+  else if(action==='close-add' || action==='add-overlay'){ if(e.target===btn){ closeAdd(); } }
+  else if(action==='save-add'){ saveAdd(); }
+  else if(action==='add-pick-image'){ var afi=document.getElementById('add-image-input'); if(afi) afi.click(); }
+  else if(action==='add-remove-image'){ addRemoveImage(); }
   else if(action==='import-photos'){ var bi=document.getElementById('bulk-photo-input'); if(bi) bi.click(); }
   else if(action==='close-bulkimport'){ closeBulkImport(); }
   else if(action==='view-invoice'){ UI.invoiceView = btn.dataset.invoice; rerender(); }
@@ -1636,11 +1745,20 @@ app.addEventListener('input', function(e){
   else if(bind==='editSize'){ if(UI.editDraft) UI.editDraft.size = t.value; }
   else if(bind==='editPrice'){ if(UI.editDraft) UI.editDraft.price = t.value; }
   else if(bind==='editStock'){ if(UI.editDraft) UI.editDraft.stock = t.value; }
+  else if(bind==='addSku'){ if(UI.addDraft) UI.addDraft.sku = t.value; }
+  else if(bind==='addEan'){ if(UI.addDraft) UI.addDraft.ean = t.value; }
+  else if(bind==='addSupplier'){ if(UI.addDraft) UI.addDraft.supplier = t.value; }
+  else if(bind==='addName'){ if(UI.addDraft) UI.addDraft.name = t.value; }
+  else if(bind==='addFibre'){ if(UI.addDraft) UI.addDraft.fibre = t.value; }
+  else if(bind==='addSize'){ if(UI.addDraft) UI.addDraft.size = t.value; }
+  else if(bind==='addPrice'){ if(UI.addDraft) UI.addDraft.price = t.value; }
+  else if(bind==='addStock'){ if(UI.addDraft) UI.addDraft.stock = t.value; }
 });
 
 app.addEventListener('change', function(e){
   var t = e.target;
   if(t.id==='edit-image-input' && t.files && t.files[0]){ editPickImage(t.files[0]); t.value=''; return; }
+  if(t.id==='add-image-input' && t.files && t.files[0]){ addPickImage(t.files[0]); t.value=''; return; }
   if(t.id==='bulk-photo-input' && t.files && t.files.length){ runBulkImport(t.files); t.value=''; return; }
   var bind = t.dataset.bind;
   if(!bind) return;
